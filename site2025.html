@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Archive des Résumés</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: url('https://i.ibb.co/V0zpxHYC/IMG-20250427-112657-1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 100px;
+}
+
+h1.titre {
+    color: white;
+    margin-top: 50px;
+    font-size: 48px;
+    text-shadow: 3px 3px 10px black;
+    letter-spacing: 2px;
+    border: 2px solid rgba(255,255,255,0.7);
+    display: inline-block;
+    padding: 15px 25px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 2s ease-in-out forwards;
+    opacity: 0;
+}
+
+h2.sous-titre {
+    color: #f0f0f0;
+    margin-top: 20px;
+    font-size: 24px;
+    text-shadow: 2px 2px 5px black;
+    animation: fadeIn 3s ease-in-out forwards;
+    opacity: 0;
+}
+
+button {
+    padding: 15px 30px;
+    margin: 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.subject {
+    background: white;
+    margin: 10px auto;
+    padding: 15px;
+    width: 250px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px gray;
+}
+
+.subject a {
+    text-decoration: none;
+    color: #0077cc;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.back {
+    margin-top: 30px;
+}
+
+#s1, #s2 {
+    background: rgba(0, 0, 0, 0.4);
+    min-height: 100vh;
+    padding-bottom: 80px;
+    backdrop-filter: blur(3px);
+}
+
+h1.section-titre {
+    color: white;
+    margin-top: 30px;
+    font-size: 40px;
+    text-shadow: 3px 3px 8px black;
+    border: 2px solid rgba(255,255,255,0.5);
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    animation: fadeInTop 1.5s ease forwards;
+    opacity: 0;
+}
+
+#infoBtn {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    backdrop-filter: blur(3px);
+    box-shadow: 0 0 10px black;
+    transition: background-color 0.3s ease;
+    z-index: 1000;
+}
+
+#infoBtn:hover {
+    background-color: #45a049;
+}
+
+#infoPanel {
+    display: none;
+    position: fixed;
+    bottom: 65px;
+    left: 15px;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 15px;
+    border-radius: 12px;
+    width: 260px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 10px black;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+}
+
+#infoPanel a {
+    color: #4FC3F7;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#infoPanel a:hover {
+    color: #81D4FA;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInTop {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+<button id="infoBtn">ℹ️ Info</button>
+<div id="infoPanel">
+    <p>© 2025 | Réalisé par <strong>Abbes BG</strong></p>
+    <p>📧 <a href="mailto:abbes1esi1info@gmail.com">abbes1esi1info@gmail.com</a></p>
+</div>
+
+<div id="accueil">
+    <h1 class="titre">📚 Bienvenue dans votre archive des résumés</h1>
+    <h2 class="sous-titre">Université Saida-Sba</h2>
+    <div class="container">
+        <button onclick="afficherS1()">📖 Semestre 1</button>
+        <button onclick="afficherS2()">📖 Semestre 2</button>
+    </div>
+</div>
+
+<div id="s1" style="display:none;">
+    <h1 class="section-titre">Matières du Semestre 1</h1>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_ANALYSE" target="_blank">Analyse</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_ALGEBRE" target="_blank">Algèbre</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_ALGO" target="_blank">Algorithmique</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_STRUCTURE" target="_blank">Structure machine</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_ENGLISH" target="_blank">English</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_TERMINOLOGIE" target="_blank">Terminologie</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_MECANIQUE" target="_blank">Mécanique de point</a></div>
+    <div class="back">
+        <button onclick="retourAccueil()">⬅️ Retour à l'accueil</button>
+    </div>
+</div>
+
+<div id="s2" style="display:none;">
+    <h1 class="section-titre">Matières du Semestre 2</h1>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_ANALYSE_S2" target="_blank">Analyse</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_ALGO_S2" target="_blank">Algorithmique</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_ALGEBRE_S2" target="_blank">Algèbre</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_PROBA" target="_blank">Probabilité et statistiques</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_PROG" target="_blank">Programmation</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_TIC" target="_blank">TIC</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_ELEC" target="_blank">Électricité générale</a></div>
+    <div class="subject"><a href="LIEN_GOOGLE_DRIVE_STRUCTURE_S2" target="_blank">Structure machine</a></div>
+    <div class="back">
+        <button onclick="retourAccueil()">⬅️ Retour à l'accueil</button>
+    </div>
+</div>
+
+<script>
+function afficherS1() {
+    document.getElementById('accueil').style.display = "none";
+    document.getElementById('s1').style.display = "block";
+    document.getElementById('s2').style.display = "none";
+}
+
+function afficherS2() {
+    document.getElementById('accueil').style.display = "none";
+    document.getElementById('s2').style.display = "block";
+    document.getElementById('s1').style.display = "none";
+}
+
+function retourAccueil() {
+    document.getElementById('s1').style.display = "none";
+    document.getElementById('s2').style.display = "none";
+    document.getElementById('accueil').style.display = "block";
+}
+
+document.getElementById('infoBtn').addEventListener('click', function() {
+    var panel = document.getElementById('infoPanel');
+    if (panel.style.display === "block") {
+        panel.style.display = "none";
+    } else {
+        panel.style.display = "block";
+    }
+});
+</script>
+</body>
+</html>
