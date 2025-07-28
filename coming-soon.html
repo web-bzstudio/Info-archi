@@ -24,13 +24,13 @@
       font-size: 2.2em;
       color: #0056b3;
       text-shadow: 0 0 6px #ffc107;
-      margin-bottom: 10px;
+      margin: 10px 0;
     }
 
     .barrier {
       width: 90%;
       max-width: 500px;
-      height: 50px;
+      height: 40px;
       background: repeating-linear-gradient(
         -45deg,
         #ffc107,
@@ -38,7 +38,7 @@
         #343a40 20px,
         #343a40 40px
       );
-      margin: 20px 0;
+      margin: 10px 0;
       border: 4px solid #343a40;
       border-radius: 8px;
     }
@@ -48,7 +48,7 @@
       font-weight: bold;
       color: #856404;
       text-shadow: 0 0 3px #aaa;
-      margin-bottom: 20px;
+      margin: 20px 0;
     }
 
     p {
@@ -78,7 +78,11 @@
       }
 
       .countdown {
-        font-size: 1.3em;
+        font-size: 1.2em;
+      }
+
+      .barrier {
+        height: 30px;
       }
     }
   </style>
@@ -97,24 +101,22 @@
   <a href="index.html">⬅ العودة إلى الصفحة الرئيسية</a>
 
   <script>
-    // 120 يوم بالثواني
-    let countdownSeconds = 120 * 24 * 60 * 60;
-
-    function formatTime(seconds) {
-      const days = Math.floor(seconds / (3600 * 24));
-      const hours = Math.floor((seconds % (3600 * 24)) / 3600);
-      const minutes = Math.floor((seconds % 3600) / 60);
-      const secs = seconds % 60;
-
-      return `يتبقى: ${days} يوم، ${hours} ساعة، ${minutes} دقيقة، ${secs} ثانية`;
-    }
+    // التاريخ النهائي بعد 120 يوم من الآن (ثابت)
+    const endDate = new Date("2025-11-25T00:00:00").getTime();
 
     function updateCountdown() {
-      const timerElement = document.getElementById("timer");
-      timerElement.textContent = formatTime(countdownSeconds);
+      const now = new Date().getTime();
+      const distance = endDate - now;
 
-      if (countdownSeconds > 0) {
-        countdownSeconds--;
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      const timerElement = document.getElementById("timer");
+
+      if (distance > 0) {
+        timerElement.textContent = `يتبقى: ${days} يوم، ${hours} ساعة، ${minutes} دقيقة، ${seconds} ثانية`;
         setTimeout(updateCountdown, 1000);
       } else {
         timerElement.textContent = "🎉 الوقت انتهى! ترقب المفاجأة!";
