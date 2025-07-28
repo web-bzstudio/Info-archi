@@ -1,79 +1,128 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>🚧 قريبًا</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🚧 تحت الإنشاء</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      color: #fff;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+      background-color: #fff3cd;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      background-image: repeating-linear-gradient(
+      min-height: 100vh;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #0056b3;
+      text-shadow: 0 0 6px #ffc107;
+      margin-bottom: 10px;
+    }
+
+    .barrier {
+      width: 90%;
+      max-width: 500px;
+      height: 50px;
+      background: repeating-linear-gradient(
         -45deg,
         #ffc107,
         #ffc107 20px,
         #343a40 20px,
         #343a40 40px
       );
-      animation: backgroundMove 4s linear infinite;
+      margin: 20px 0;
+      border: 4px solid #343a40;
+      border-radius: 8px;
     }
 
-    @keyframes backgroundMove {
-      from {
-        background-position: 0 0;
-      }
-      to {
-        background-position: 100px 100px;
-      }
-    }
-
-    .container {
-      padding: 100px 20px;
-      background-color: rgba(0, 0, 0, 0.6);
-      margin: 80px auto;
-      border-radius: 20px;
-      max-width: 600px;
-      box-shadow: 0 0 20px #ffc107;
-    }
-
-    h1 {
-      font-size: 56px;
+    .countdown {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #856404;
+      text-shadow: 0 0 3px #aaa;
       margin-bottom: 20px;
-      color: #ffffff;
-      text-shadow: 0 0 10px #ffc107, 0 0 20px #ffc107;
     }
 
     p {
-      font-size: 22px;
-      color: #f8f9fa;
-      text-shadow: 0 0 5px #ffc107;
+      font-size: 1.3em;
+      color: #444;
+      margin: 0 20px;
     }
 
     a {
-      color: #fff;
-      background-color: #ffc107;
+      margin-top: 25px;
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
       padding: 10px 20px;
       border-radius: 8px;
       text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-      margin-top: 20px;
       transition: background-color 0.3s;
     }
 
     a:hover {
-      background-color: #e0a800;
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6em;
+      }
+
+      .countdown {
+        font-size: 1.3em;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>🚧 تحت الإنشاء 🚧</h1>
-    <p>نحن نجهز لك شيئًا رائعًا! شكرًا لصبرك 🙏</p>
-    <a href="/">⬅ العودة للصفحة الرئيسية</a>
-  </div>
+  <div class="barrier"></div>
+
+  <h1>🚧 تحت الإنشاء 🚧</h1>
+
+  <div class="barrier"></div>
+
+  <p class="countdown" id="timer">جارٍ التحميل...</p>
+
+  <p>نحن نعمل على مفاجأة تليق بذوقك... شكرًا لصبرك وثقتك 💙</p>
+  <a href="index.html">⬅ العودة إلى الصفحة الرئيسية</a>
+
+  <script>
+    // 120 يوم بالثواني
+    let countdownSeconds = 120 * 24 * 60 * 60;
+
+    function formatTime(seconds) {
+      const days = Math.floor(seconds / (3600 * 24));
+      const hours = Math.floor((seconds % (3600 * 24)) / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+
+      return `يتبقى: ${days} يوم، ${hours} ساعة، ${minutes} دقيقة، ${secs} ثانية`;
+    }
+
+    function updateCountdown() {
+      const timerElement = document.getElementById("timer");
+      timerElement.textContent = formatTime(countdownSeconds);
+
+      if (countdownSeconds > 0) {
+        countdownSeconds--;
+        setTimeout(updateCountdown, 1000);
+      } else {
+        timerElement.textContent = "🎉 الوقت انتهى! ترقب المفاجأة!";
+      }
+    }
+
+    updateCountdown();
+  </script>
 
 </body>
 </html>
