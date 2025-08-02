@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://web-bzstudio.github.io/Info-archi/sitemap.xml
+
