@@ -201,6 +201,7 @@ h1.section-titre {
     <div class="container">
         <button onclick="afficherS1()">📖 Semestre 1</button>
         <button onclick="afficherS2()">📖 Semestre 2</button>
+        <button onclick="afficherS3()">🔧 Semestre 3</button>
     </div>
 </div>
 
@@ -241,17 +242,27 @@ function afficherS1() {
     document.getElementById('accueil').style.display = "none";
     document.getElementById('s1').style.display = "block";
     document.getElementById('s2').style.display = "none";
+    document.getElementById('s3').style.display = "none";
 }
 
 function afficherS2() {
     document.getElementById('accueil').style.display = "none";
     document.getElementById('s2').style.display = "block";
     document.getElementById('s1').style.display = "none";
+    document.getElementById('s3').style.display = "none";
+}
+    
+    function afficherS3() {
+    document.getElementById('accueil').style.display = "none";
+    document.getElementById('s3').style.display = "block";
+    document.getElementById('s1').style.display = "none";
+        document.getElementById('s3').style.display = "none";
 }
 
 function retourAccueil() {
     document.getElementById('s1').style.display = "none";
     document.getElementById('s2').style.display = "none";
+    document.getElementById('s3').style.display = "none";
     document.getElementById('accueil').style.display = "block";
 }
 
