@@ -185,6 +185,16 @@ h1.section-titre {
     from { opacity: 0; transform: translateY(-30px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+#themeBtn{position:fixed;right:18px;bottom:18px;width:64px;height:36px;border-radius:999px;background:#2b2b2b;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:flex-start;padding:3px;transition:.35s;z-index:1001}#themeBtn::after{content:'🌙';width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;transition:.35s}
+button:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,0,0,.25)}
+.subject{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);transition:.3s;max-width:350px;width:90%;border-radius:14px}
+.subject:hover{transform:scale(1.03)}
+body.dark{background:url('https://i.ibb.co/V0zpxHYC/IMG-20250427-112657-1.jpg') center/cover fixed!important;}
+body.dark .subject{background:#222;color:#fff}
+body.dark .subject a{color:#8ecbff}
+body.dark #s1,body.dark #s2,body.dark #s3,body.dark #s4,body.dark #s5menu,body.dark #s5si,body.dark #s5isil{background:rgba(0,0,0,.85)}
+
 </style>
 </head>
 <body>
@@ -203,6 +213,8 @@ h1.section-titre {
         <button onclick="afficherS2()">📖 Semestre 2</button>
         <button onclick="afficherS3()">🔧 Semestre 3</button>
         <button onclick="afficherS4()">⚙️ Semestre 4</button>
+        <button onclick="afficherS5Menu()">🎓 Semestre 5</button>
+
     </div>
 </div>
 
@@ -266,13 +278,34 @@ h1.section-titre {
     </div>
 </div>
     
+
+<div id="s5menu" style="display:none;background:rgba(0,0,0,.4);min-height:100vh;padding:40px">
+<h1 class="section-titre">Semestre 5</h1>
+<div class="subject"><a href="#" onclick="afficherS5SI();return false;">💻 S5 - SI</a></div>
+<div class="subject"><a href="#" onclick="afficherS5ISIL();return false;">🖥 S5 - ISIL</a></div>
+<div class="back"><button onclick="retourAccueil()">⬅️ Retour</button></div></div>
+<div id="s5si" style="display:none;background:rgba(0,0,0,.4);min-height:100vh;padding:40px">
+<h1 class="section-titre">S5 - SI</h1>
+<div class="subject">Ajoutez ici les matières SI</div>
+<div class="back"><button onclick="afficherS5Menu()">⬅️ Retour</button></div></div>
+<div id="s5isil" style="display:none;background:rgba(0,0,0,.4);min-height:100vh;padding:40px">
+<h1 class="section-titre">S5 - ISIL</h1>
+<div class="subject">Ajoutez ici les matières ISIL</div>
+<div class="back"><button onclick="afficherS5Menu()">⬅️ Retour</button></div></div>
 <script>
+
+function hideAll(){['accueil','s1','s2','s3','s4','s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});}
+function afficherS5Menu(){hideAll();document.getElementById('s5menu').style.display='block';}
+function afficherS5SI(){hideAll();document.getElementById('s5si').style.display='block';}
+function afficherS5ISIL(){hideAll();document.getElementById('s5isil').style.display='block';}
+
 function afficherS1() {
     document.getElementById('accueil').style.display = "none";
     document.getElementById('s1').style.display = "block";
     document.getElementById('s2').style.display = "none";
     document.getElementById('s3').style.display = "none";
     document.getElementById('s4').style.display = "none";
+    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
 }
 
 function afficherS2() {
@@ -281,6 +314,7 @@ function afficherS2() {
     document.getElementById('s1').style.display = "none";
     document.getElementById('s3').style.display = "none";
     document.getElementById('s4').style.display = "none";
+    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
 }
     
 function afficherS3() {
@@ -289,6 +323,7 @@ function afficherS3() {
     document.getElementById('s1').style.display = "none";
     document.getElementById('s2').style.display = "none";
     document.getElementById('s4').style.display = "none";
+    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
 }
 function afficherS4() {
     document.getElementById('accueil').style.display = "none";
@@ -303,6 +338,7 @@ function retourAccueil() {
     document.getElementById('s2').style.display = "none";
     document.getElementById('s3').style.display = "none";
     document.getElementById('s4').style.display = "none";
+    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
     document.getElementById('accueil').style.display = "block";
 }
 
@@ -310,6 +346,16 @@ document.getElementById('infoBtn').addEventListener('click', function() {
     var panel = document.getElementById('infoPanel');
     panel.style.display = panel.style.display === "block" ? "none" : "block";
 });
+</script>
+<button id="themeBtn" title="Mode sombre">🌙</button>
+
+<script>
+const themeBtn=document.getElementById("themeBtn");
+if(localStorage.getItem("theme")==="dark"){document.body.classList.add("dark");themeBtn.style.justifyContent="flex-end";}
+themeBtn.onclick=()=>{document.body.classList.toggle("dark");
+const d=document.body.classList.contains("dark");
+localStorage.setItem("theme",d?"dark":"light");
+themeBtn.style.justifyContent=d?"flex-end":"flex-start";};
 </script>
 </body>
 </html>
