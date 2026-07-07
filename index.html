@@ -214,7 +214,7 @@ body.dark #s1,body.dark #s2,body.dark #s3,body.dark #s4,body.dark #s5menu,body.d
         <button onclick="afficherS3()">🔧 Semestre 3</button>
         <button onclick="afficherS4()">⚙️ Semestre 4</button>
         <button onclick="afficherS5Menu()">📂 Semestre 5</button>
-        <button onclick="afficherS4()">🎓 Semestre 6</button>
+        <button onclick="afficherS6()">🎓 Semestre 6</button>
 
     </div>
 </div>
@@ -332,6 +332,8 @@ function afficherS1() {
     document.getElementById('s2').style.display = "none";
     document.getElementById('s3').style.display = "none";
     document.getElementById('s4').style.display = "none";
+    document.getElementById('s6').style.display = "none";
+    
     ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
 }
 
@@ -341,6 +343,8 @@ function afficherS2() {
     document.getElementById('s1').style.display = "none";
     document.getElementById('s3').style.display = "none";
     document.getElementById('s4').style.display = "none";
+    document.getElementById('s6').style.display = "none";
+    
     ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
 }
     
@@ -350,6 +354,7 @@ function afficherS3() {
     document.getElementById('s1').style.display = "none";
     document.getElementById('s2').style.display = "none";
     document.getElementById('s4').style.display = "none";
+    document.getElementById('s6').style.display = "none";
     ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
 }
 function afficherS4() {
@@ -358,9 +363,18 @@ function afficherS4() {
     document.getElementById('s1').style.display = "none";
     document.getElementById('s2').style.display = "none";
     document.getElementById('s3').style.display = "none";
+    document.getElementById('s6').style.display = "none";
     ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
 }
-
+ function afficherS6() {
+    document.getElementById('accueil').style.display = "none";
+    document.getElementById('s6').style.display = "block";
+    document.getElementById('s1').style.display = "none";
+    document.getElementById('s2').style.display = "none";
+    document.getElementById('s3').style.display = "none";
+    document.getElementById('s4').style.display = "none";
+    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
+    }
 function retourAccueil() {
     document.getElementById('s1').style.display = "none";
     document.getElementById('s2').style.display = "none";
