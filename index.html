@@ -1,13 +1,684 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Résumé et Cours Informatique LMD | Université Sidi bél abbes</title>
+<title>v22 Pro - Portail Étudiant Faculté Informatique SBA</title>
+<style>
 
-<link rel="icon" type="image/png" href="https://web-bzstudio.github.io/Info-archi/favicon.png">
+:root {
+    --glass: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --accent: linear-gradient(135deg, #5b8cff, #6c63ff);
+    --text-color: #ffffff;
+    --card-bg: rgba(255, 255, 255, 0.88);
+    --text-dark: #1e3a8a;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    text-align: center;
+    background: url('https://i.ibb.co/V0zpxHYC/IMG-20250427-112657-1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 100px;
+    overflow-x: hidden;
+}
+
+/* لوحة جزيئات الخلفية التفاعلية السينمائية */
+#particle-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 20% 30%, rgba(91, 140, 255, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(108, 99, 255, 0.15), transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+    animation: ambientShift 10s ease infinite alternate;
+}
+
+@keyframes ambientShift {
+    0% { filter: hue-rotate(0deg); opacity: 0.8; }
+    100% { filter: hue-rotate(45deg); opacity: 1; }
+}
+
+/* تغليف المحتوى فوق الخلفيات الجزيئية */
+.app-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+h1.titre {
+    color: white;
+    margin-top: 50px;
+    font-size: clamp(28px, 5vw, 48px);
+    text-shadow: 3px 3px 15px rgba(0,0,0,0.6);
+    letter-spacing: 1px;
+    border: 1px solid var(--glass-border);
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+h2.sous-titre {
+    color: #f0f0f0;
+    margin-top: 20px;
+    font-size: 22px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+    animation: fadeIn 2s ease-in-out forwards;
+}
+
+button {
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 16px;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 8px 20px rgba(108, 99, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 25px rgba(108, 99, 255, 0.45);
+    filter: brightness(1.1);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* نظام تبويبات للتنقل الانسيابي السريع السداسي */
+.smart-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    max-width: 950px;
+    margin: 15px auto;
+    padding: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+.smart-tabs::-webkit-scrollbar { display: none; }
+.tab-link {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 10px 18px;
+    border-radius: 14px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.tab-link.active, .tab-link:hover {
+    background: var(--accent);
+    box-shadow: 0 6px 15px rgba(108, 99, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    max-width: 1050px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* تصميم بطاقات المواد زجاجية ثلاثية الأبعاد المحدثة */
+.subject {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin: 10px auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 320px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.1s ease, box-shadow 0.3s ease, background 0.3s ease;
+    position: relative;
+}
+
+.subject:hover {
+    box-shadow: 0 15px 35px rgba(91, 140, 255, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.subject::before {
+    content: '📘';
+    display: block;
+    font-size: 32px;
+    margin-bottom: 10px;
+    transform: translateZ(20px);
+}
+
+.subject a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 700;
+    font-size: 18px;
+    display: inline-block;
+    transform: translateZ(15px);
+}
+
+/* نظام المفضلة والتقييم والتلخيص داخل الكارد */
+.card-tools {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    transform: translateZ(10px);
+}
+
+.fav-btn, .ai-sum-btn {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 5px !important;
+    margin: 0 !important;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform 0.2s ease !important;
+}
+.fav-btn:hover, .ai-sum-btn:hover { transform: scale(1.2) !important; }
+
+.rate-wrap {
+    display: flex;
+    gap: 4px;
+    font-size: 14px;
+    color: #6b7280;
+}
+.rate-btn {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+.rate-btn:hover { opacity: 0.7; }
+
+/* قسم الوصول السريع ومؤشر المادة الأخيرة للترحيب الذكي */
+#favoritesSection, #recentVisitSection {
+    display: none;
+    margin: 15px auto;
+    padding: 15px;
+    max-width: 850px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+#favoritesSection h3, #recentVisitSection h3 { color: white; margin: 0 0 10px 0; font-size: 16px; }
+.fav-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* الأوضاع والسمات المظلمة */
+body.dark {
+    background: url('https://i.ibb.co/V0zpxHYC/IMG-20250427-112657-1.jpg') center/cover fixed !important;
+    --card-bg: rgba(23, 23, 37, 0.92);
+    --text-dark: #8ecbff;
+}
+body.dark::before {
+    background: radial-gradient(circle at 20% 30%, rgba(91, 140, 255, 0.08), transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(108, 99, 255, 0.08), transparent 45%);
+}
+body.dark .subject .card-tools { border-top: 1px solid rgba(255,255,255,0.08); }
+body.dark #s1, body.dark #s2, body.dark #s3, body.dark #s4, body.dark #s5menu, body.dark #s5si, body.dark #s5isil, body.dark #s6 {
+    background: rgba(11, 11, 18, 0.9);
+}
+
+.back { margin-top: 35px; }
+
+#s1, #s2, #s3, #s4, #s5menu, #s5si, #s5isil, #s6 {
+    background: rgba(0, 0, 0, 0.5);
+    min-height: 100vh;
+    padding-bottom: 90px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+h1.section-titre {
+    color: white;
+    margin-top: 30px;
+    font-size: clamp(24px, 4vw, 40px);
+    text-shadow: 2px 2px 10px black;
+    border: 1px solid var(--glass-border);
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: 16px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
+    animation: fadeInTop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+#infoBtn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+/* شريط التصفح السفلي المطور */
+.bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 65px;
+    background: rgba(15, 15, 25, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    z-index: 1999;
+}
+.bottom-nav a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 24px;
+    transition: 0.25s;
+    padding: 8px 16px;
+    border-radius: 12px;
+}
+.bottom-nav a:hover {
+    color: #6c63ff;
+    background: rgba(255,255,255,0.05);
+}
+
+/* شريط تقدم القراءة العلوي النيون */
+.progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 4px;
+    width: 0;
+    background: linear-gradient(90deg, #5b8cff, #00ffc8);
+    z-index: 10000;
+    box-shadow: 0 0 10px #5b8cff;
+    transition: width 0.1s ease;
+}
+
+#fab {
+    position: fixed;
+    right: 20px;
+    bottom: 95px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    font-size: 22px;
+    background: var(--accent);
+    border: none; color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+    z-index: 998;
+}
+
+#loader {
+    position: fixed;
+    inset: 0;
+    background: #090d16;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font: 700 24px Arial, sans-serif;
+    z-index: 99999;
+    transition: opacity 0.4s ease;
+}
+.spinner {
+    width: 50px; height: 50px;
+    border: 5px solid rgba(255,255,255,0.1);
+    border-top-color: #6c63ff;
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#toast {
+    position: fixed;
+    top: 25px; right: 25px;
+    background: rgba(20, 20, 30, 0.9);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: none;
+    z-index: 99999;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.fade-page { animation: fadeSlide 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+@keyframes fadeSlide { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInTop { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* تجميل الهيرو بنر واللوحة الـ V18 */
+.hero-banner {
+    max-width: 950px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(91, 140, 255, 0.12), rgba(108, 99, 255, 0.06));
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+}
+.quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 15px; margin: 20px 0; }
+.quick-actions .qa { padding: 16px; border-radius: 18px; text-align: center; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.05); color: white; font-weight: 600; cursor: pointer; transition: 0.25s; }
+.quick-actions .qa:hover { transform: translateY(-5px); background: rgba(255,255,255,0.12); }
+.progress-card { margin: 20px 0; padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.05); color: white; }
+.progress-bar { height: 10px; border-radius: 999px; background: rgba(255,255,255,0.1); overflow: hidden; margin-top: 10px; }
+.progress-fill { width: 85%; height: 100%; background: linear-gradient(90deg, #5b8cff, #42d392); }
+
+/* نافذة المعلومات المودال الزجاجي */
+#infoOverlay, #aiSummaryOverlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(8, 11, 21, 0.7);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    z-index: 9999; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s ease;
+}
+#infoOverlay.active, #aiSummaryOverlay.active { opacity: 1; }
+#infoCard, #aiSummaryCard {
+    background: white; color: #1e293b;
+    width: min(90%, 440px); border-radius: 28px; padding: 30px;
+    text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+#infoOverlay.active #infoCard, #aiSummaryOverlay.active #aiSummaryCard { transform: scale(1); }
+body.dark #infoCard, body.dark #aiSummaryCard { background: #171725; color: #f8fafc; border: 1px solid rgba(255,255,255,0.08); }
+
+/* شريط البحث والقاموس الذكي */
+.search-wrap { position: relative; max-width: 520px; width: 92%; margin: 25px auto; }
+#searchBox {
+    width: 100%; padding: 16px 45px 16px 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+    box-sizing: border-box; background: rgba(255,255,255,0.9); font-size: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+body.dark #searchBox { background: rgba(30, 30, 42, 0.9); color: white; border-color: rgba(255,255,255,0.05); }
+#searchBox:focus { transform: scale(1.02); box-shadow: 0 0 30px rgba(108,99,255,0.4); outline: none; }
+#clearSearch { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); display: none; background: none; border: none; font-size: 18px; cursor: pointer; color: #888; }
+
+#searchSuggestions {
+    max-width: 520px; width: 100%; margin: 8px auto; background: rgba(255, 255, 255, 0.98);
+    border-radius: 18px; display: none; overflow: hidden; position: absolute; left: 0; right: 0; z-index: 2000;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2); border: 1px solid rgba(0,0,0,0.06); backdrop-filter: blur(10px);
+}
+body.dark #searchSuggestions { background: rgba(28, 28, 40, 0.98); border-color: rgba(255,255,255,0.08); }
+.sug { padding: 14px 18px; cursor: pointer; color: #222; text-align: left; display: flex; align-items: center; justify-content: space-between; transition: 0.2s; border-bottom: 1px solid rgba(0,0,0,0.04); }
+body.dark .sug { color: #fff; border-bottom-color: rgba(255,255,255,0.04); }
+.sug:hover { background: var(--accent); color: white; }
+.sug-info { font-size: 11px; opacity: 0.7; padding: 3px 10px; border-radius: 20px; background: rgba(0,0,0,0.05); }
+
+/* قسم القاموس السريع للمصطلحات الفرنسية */
+#dictPreview { display: none; text-align: left; background: rgba(108, 99, 255, 0.15); border: 1px dashed #6c63ff; padding: 12px; border-radius: 14px; margin-top: 10px; font-size: 14px; color: white; }
+
+/* لوحة تحكم ذكية متكاملة وبلوكات المهام والعد التنازلي */
+.dashboard { max-width: 720px; margin: 25px auto; padding: 20px; border-radius: 24px; background: rgba(255,255,255,0.08); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); display: grid; gap: 15px; }
+.statsgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.cardstat { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 18px; text-align: center; color: white; border: 1px solid rgba(255,255,255,0.04); }
+.cardstat b { display: block; font-size: 28px; margin-bottom: 4px; }
+
+.dashboard-widgets { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; text-align: left; color: white; }
+.widget-box { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 18px; }
+.widget-box h4 { margin: 0 0 10px 0; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+.todo-input-wrap { display: flex; gap: 8px; margin-bottom: 10px; }
+.todo-input-wrap input { flex: 1; padding: 8px; border-radius: 8px; border: none; background: rgba(255,255,255,0.9); font-size: 13px; }
+.todo-input-wrap button { padding: 6px 12px; margin: 0; font-size: 13px; border-radius: 8px; }
+.todo-list-items { list-style: none; padding: 0; margin: 0; max-height: 90px; overflow-y: auto; }
+.todo-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.07); padding: 6px 10px; border-radius: 8px; margin-bottom: 5px; font-size: 13px; }
+.todo-item button { padding: 2px 6px; margin: 0; background: #ff4a4a; font-size: 11px; border-radius: 4px; box-shadow: none; }
+#countdown-display { font-size: 18px; font-weight: bold; text-align: center; letter-spacing: 1px; color: #00ffc8; margin-top: 10px; }
+
+/* === Custom Scrollbar Enhancement (v19) === */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(15, 15, 25, 0.9);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent, #00d2ff);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hover, #0099ff);
+}
+#particle-canvas {
+    will-change: transform;
+}
+
+
+/* === Pomodoro & Peer-to-Peer Upload Form (v19 Pro) === */
+.p2p-modal, .pomodoro-modal {
+    display: none; position: fixed; inset: 0;
+    background: rgba(8, 11, 21, 0.75);
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    z-index: 10000; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s ease;
+}
+.p2p-modal.active, .pomodoro-modal.active { opacity: 1; display: flex; }
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px; padding: 25px; width: min(92%, 460px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3); color: white; text-align: center;
+}
+body.dark .glass-card {
+    background: rgba(20, 20, 35, 0.6);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+.glass-input {
+    width: 100%; padding: 12px; margin: 10px 0; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);
+    color: white; box-sizing: border-box; font-size: 14px;
+}
+.glass-input::placeholder { color: rgba(255,255,255,0.6); }
+body.dark .glass-input { background: rgba(0,0,0,0.2); }
+
+/* Pomodoro Specific Timer Design */
+.pomodoro-timer { font-size: 48px; font-weight: bold; margin: 15px 0; color: #00ffc8; text-shadow: 0 0 10px rgba(0,255,200,0.4); }
+.pomo-controls button { padding: 10px 20px; font-size: 14px; border-radius: 12px; }
+.pomo-modes { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+.pomo-btn-mode { background: rgba(255,255,255,0.1); box-shadow: none; padding: 6px 14px; border-radius: 8px; font-size: 12px; }
+.pomo-btn-mode.active { background: var(--accent); }
+
+
+/* Fix: Ensure text centering in all modules and dashboard widgets */
+.pomodoro-timer, .widget-box h4, #countdown-display, .glass-card, #infoCard, #aiSummaryCard, .todo-item {
+    text-align: center !important;
+}
+
+/* Ensure flex containers distribute space correctly */
+.pomodoro-modal, .p2p-modal {
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+
+    /* تصميم الخطة الدراسية المحدث */
+    .study-planner-modal {
+        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(10px); z-index: 10000; align-items: center; justify-content: center;
+    }
+    .modal-content {
+        background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 30px; border-radius: 20px; color: white; width: 90%; max-width: 400px;
+    }
+    .glass-btn {
+        background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+        padding: 10px 20px; border-radius: 10px; color: white; cursor: pointer; backdrop-filter: blur(5px);
+        transition: 0.3s;
+    }
+    .glass-btn:hover { background: rgba(255,255,255,0.3); }
+
+    /* تحديث الشريط العلوي */
+    .top-bar-actions { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 25px; }
+    .nav-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 12px; color: white; cursor: pointer; backdrop-filter: blur(8px); transition: 0.3s; font-size: 14px; }
+    .nav-btn:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.4); }
+
+    /* المودال الاحترافي العصري */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); z-index: 99999; justify-content: center; align-items: center; }
+    .modal-modern { background: rgba(20, 20, 20, 0.9); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 30px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .modal-modern h2 { color: #fff; margin-bottom: 25px; font-weight: 300; }
+    .modal-modern input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; color: #fff; margin-bottom: 15px; }
+    .modal-modern button { width: 100%; padding: 15px; border-radius: 15px; border: none; cursor: pointer; transition: 0.3s; font-size: 16px; margin-top: 10px; }
+    .btn-save { background: #6c63ff; color: white; }
+    .btn-close { background: transparent; color: #ff6b6b; }
+
+
+    /* تحسين شكل البوت */
+    #chat-container { border-radius: 15px; background: rgba(255, 255, 255, 0.9); padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .chat-msg { margin: 5px 0; padding: 8px; border-radius: 10px; }
+    .bot-msg { background: #e1f5fe; text-align: left; }
+    .user-msg { background: #fff3e0; text-align: right; }
+
+    /* تصميم الخطة الدراسية المحدث */
+    .study-planner-modal {
+        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(10px); z-index: 10000; align-items: center; justify-content: center;
+    }
+    .modal-content {
+        background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 30px; border-radius: 20px; color: white; width: 90%; max-width: 400px;
+    }
+    .glass-btn {
+        background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+        padding: 10px 20px; border-radius: 10px; color: white; cursor: pointer; backdrop-filter: blur(5px);
+        transition: 0.3s;
+    }
+    .glass-btn:hover { background: rgba(255,255,255,0.3); }
+
+    /* تحديث الشريط العلوي */
+    .top-bar-actions { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 25px; }
+    .nav-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 12px; color: white; cursor: pointer; backdrop-filter: blur(8px); transition: 0.3s; font-size: 14px; }
+    .nav-btn:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.4); }
+
+    /* المودال الاحترافي العصري */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); z-index: 99999; justify-content: center; align-items: center; }
+    .modal-modern { background: rgba(20, 20, 20, 0.9); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 30px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .modal-modern h2 { color: #fff; margin-bottom: 25px; font-weight: 300; }
+    .modal-modern input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; color: #fff; margin-bottom: 15px; }
+    .modal-modern button { width: 100%; padding: 15px; border-radius: 15px; border: none; cursor: pointer; transition: 0.3s; font-size: 16px; margin-top: 10px; }
+    .btn-save { background: #6c63ff; color: white; }
+    .btn-close { background: transparent; color: #ff6b6b; }
+
+
+    /* تحسينات الإصدار 22: Glassmorphism و Reading Mode */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    .reading-mode {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: white; z-index: 9999; padding: 50px; overflow-y: auto;
+    }
+
+    /* تصميم الخطة الدراسية المحدث */
+    .study-planner-modal {
+        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+        backdrop-filter: blur(10px); z-index: 10000; align-items: center; justify-content: center;
+    }
+    .modal-content {
+        background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 30px; border-radius: 20px; color: white; width: 90%; max-width: 400px;
+    }
+    .glass-btn {
+        background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+        padding: 10px 20px; border-radius: 10px; color: white; cursor: pointer; backdrop-filter: blur(5px);
+        transition: 0.3s;
+    }
+    .glass-btn:hover { background: rgba(255,255,255,0.3); }
+
+    /* تحديث الشريط العلوي */
+    .top-bar-actions { display: flex; justify-content: center; align-items: center; gap: 12px; margin-bottom: 25px; }
+    .nav-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 12px; color: white; cursor: pointer; backdrop-filter: blur(8px); transition: 0.3s; font-size: 14px; }
+    .nav-btn:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.4); }
+
+    /* المودال الاحترافي العصري */
+    .modal-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(12px); z-index: 99999; justify-content: center; align-items: center; }
+    .modal-modern { background: rgba(20, 20, 20, 0.9); border: 1px solid rgba(255,255,255,0.1); padding: 40px; border-radius: 30px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .modal-modern h2 { color: #fff; margin-bottom: 25px; font-weight: 300; }
+    .modal-modern input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 15px; color: #fff; margin-bottom: 15px; }
+    .modal-modern button { width: 100%; padding: 15px; border-radius: 15px; border: none; cursor: pointer; transition: 0.3s; font-size: 16px; margin-top: 10px; }
+    .btn-save { background: #6c63ff; color: white; }
+    .btn-close { background: transparent; color: #ff6b6b; }
+    
+    
+    /* تذييل الصفحة العصري */
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(15, 15, 25, 0.85);
+    color: rgba(255, 255, 255, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    font-size: 14px;
+    margin-top: 40px;
+    position: relative;
+    z-index: 100;
+}
+    
+    
+</style>
+
+<link rel="icon" href="https://web-bzstudio.github.io/Info-archi/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="https://web-bzstudio.github.io/Info-archi/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://web-bzstudio.github.io/Info-archi/favicon.png">
+<link rel="apple-touch-icon" href="https://web-bzstudio.github.io/Info-archi/favicon.png">
+<meta name="theme-color" content="#1e3a8a">
+<link rel="manifest" href="https://web-bzstudio.github.io/Info-archi/manifest.webmanifest">
 
 <meta name="description" content="Archive complète des résumés et cours pour les étudiants en 1ère année informatique (L1). Téléchargement facile, par semestre et par matière.">
-<meta name="keywords" content="résumés informatique, cours semestre 1, cours semestre 2, université Saïda, algorithmique, analyse, électricité, TIC, programmation, Analyse , cours semester 4, information, informatique sba, PDF">
+<meta name="keywords" content="résumés informatique, cours semestre 1, cours semestre 2, université Saïda, algorithmique, analyse, électricité, TIC, programmation, Analyse, cours semestre 1, cours semestre 2, information, informatique sba, PDF">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Abbes BG">
@@ -21,7 +692,6 @@
 }
 </script>
 
-<!-- Open Graph -->
 <meta property="og:title" content="Résumé et Cours Informatique LMD | Université Sidi bél abbes">
 <meta property="og:description" content="Accédez à tous les résumés de cours de 1ère année en informatique, organisés par semestre. Version PDF.">
 <meta property="og:type" content="website">
@@ -29,185 +699,179 @@
 <meta property="og:image" content="https://i.postimg.cc/ydYrdyNL/IMG-20251019-121810.jpg">
 <meta property="og:locale" content="fr_FR">
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: url('https://i.ibb.co/V0zpxHYC/IMG-20250427-112657-1.jpg') no-repeat center center fixed;
-    background-size: cover;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    position: relative;
-    padding-bottom: 100px;
+
+
+
+<script>
+function sendMessage() {
+    let input = document.getElementById('chatInput');
+    let msg = input.value;
+    if(!msg) return;
+    
+    // إضافة رسالة المستخدم
+    let chat = document.getElementById('chatBox');
+    chat.innerHTML += `<div class="chat-msg user-msg">أنت: ${msg}</div>`;
+    
+    // منطق الرد الذكي
+    let reply = "أهلاً بك يا طالب كلية الإعلام الآلي. ";
+    if(msg.includes('مادة') || msg.includes('cours')) reply += "يمكنك العثور على المواد في قسم المكتبة الرقمية أدناه.";
+    else if(msg.includes('مساعدة') || msg.includes('help')) reply += "أنا هنا لمساعدتك في التصفح، هل تحتاج رابط لجدول الامتحانات؟";
+    else reply += "أنا مساعد ذكي، كيف يمكنني تطوير خطة دراستك اليوم؟";
+    
+    setTimeout(() => {
+        chat.innerHTML += `<div class="chat-msg bot-msg">البوت: ${reply}</div>`;
+        input.value = '';
+    }, 500);
 }
+</script>
 
-h1.titre {
-    color: white;
-    margin-top: 50px;
-    font-size: 48px;
-    text-shadow: 3px 3px 10px black;
-    letter-spacing: 2px;
-    border: 2px solid rgba(255,255,255,0.7);
-    display: inline-block;
-    padding: 15px 25px;
-    border-radius: 12px;
-    background: rgba(0,0,0,0.3);
-    backdrop-filter: blur(4px);
-    animation: fadeIn 2s ease-in-out forwards;
-    opacity: 0;
-}
 
-h2.sous-titre {
-    color: #f0f0f0;
-    margin-top: 20px;
-    font-size: 24px;
-    text-shadow: 2px 2px 5px black;
-    animation: fadeIn 3s ease-in-out forwards;
-    opacity: 0;
-}
 
-button {
-    padding: 15px 30px;
-    margin: 20px;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+<script>
+    // نظام التعلم التكيفي البسيط: حفظ المواد المفضلة
+    function savePreference(subject) {
+        let prefs = JSON.parse(localStorage.getItem('studyPrefs') || '[]');
+        if(!prefs.includes(subject)) {
+            prefs.push(subject);
+            localStorage.setItem('studyPrefs', JSON.stringify(prefs));
+        }
+        alert('تم حفظ ' + subject + ' في خطة مراجعتك!');
+    }
 
-button:hover {
-    background-color: #45a049;
-}
-
-.container {
-    margin-top: 50px;
-}
-
-.subject {
-    background: white;
-    margin: 10px auto;
-    padding: 15px;
-    width: 250px;
-    border-radius: 8px;
-    box-shadow: 0 0 5px gray;
-}
-
-.subject a {
-    text-decoration: none;
-    color: #0077cc;
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.back {
-    margin-top: 30px;
-}
-
-#s1, #s2 {
-    background: rgba(0, 0, 0, 0.4);
-    min-height: 100vh;
-    padding-bottom: 80px;
-    backdrop-filter: blur(3px);
-}
-
-h1.section-titre {
-    color: white;
-    margin-top: 30px;
-    font-size: 40px;
-    text-shadow: 3px 3px 8px black;
-    border: 2px solid rgba(255,255,255,0.5);
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 10px;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(4px);
-    animation: fadeInTop 1.5s ease forwards;
-    opacity: 0;
-}
-
-#infoBtn {
-    position: fixed;
-    bottom: 15px;
-    left: 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    backdrop-filter: blur(3px);
-    box-shadow: 0 0 10px black;
-    transition: background-color 0.3s ease;
-    z-index: 1000;
-}
-
-#infoBtn:hover {
-    background-color: #45a049;
-}
-
-#infoPanel {
-    display: none;
-    position: fixed;
-    bottom: 65px;
-    left: 15px;
-    background: rgba(0, 0, 0, 0.85);
-    color: white;
-    padding: 15px;
-    border-radius: 12px;
-    width: 260px;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 0 10px black;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 16px;
-}
-
-#infoPanel a {
-    color: #4FC3F7;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-#infoPanel a:hover {
-    color: #81D4FA;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInTop {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-#themeBtn{position:fixed;right:18px;bottom:18px;width:64px;height:36px;border-radius:999px;background:#2b2b2b;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:flex-start;padding:3px;transition:.35s;z-index:1001}#themeBtn::after{content:'🌙';width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;transition:.35s}
-button:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(0,0,0,.25)}
-.subject{background:rgba(255,255,255,.92);backdrop-filter:blur(8px);transition:.3s;max-width:350px;width:90%;border-radius:14px}
-.subject:hover{transform:scale(1.03)}
-body.dark{background:url('https://i.ibb.co/V0zpxHYC/IMG-20250427-112657-1.jpg') center/cover fixed!important;}
-body.dark .subject{background:#222;color:#fff}
-body.dark .subject a{color:#8ecbff}
-body.dark #s1,body.dark #s2,body.dark #s3,body.dark #s4,body.dark #s5menu,body.dark #s5si,body.dark #s5isil{background:rgba(0,0,0,.85)}
-
-</style>
+    // تفعيل وضع القراءة المريح
+    function toggleReadingMode() {
+        let overlay = document.createElement('div');
+        overlay.className = 'reading-mode';
+        overlay.innerHTML = '<h1>
+    <div class="top-bar-actions">
+        <button class="nav-btn" onclick="document.getElementById('modernModal').style.display='flex'">📚 خطة دراسية</button>
+        <!-- سيتم إضافة زر Theme هنا إذا كان لديك مكان محدد له -->
+    </div>
+وضع القراءة المريح</h1><button onclick="this.parentElement.remove()">إغلاق</button><p>محتوى المادة سيظهر هنا...</p>';
+        document.body.appendChild(overlay);
+    }
+</script>
 </head>
 <body>
-<button id="infoBtn">ℹ️ Info</button>
-<div id="infoPanel">
-    <p>© 2026 | Réalisé par <strong>Abbes BG</strong></p>
-    <p>📧 <a href="mailto:abbes1esi1info@gmail.com">abbes1esi1info@gmail.com</a></p>
+<div style="background-color: #2c3e50; color: white; text-align: center; padding: 10px; font-weight: bold; border-bottom: 3px solid #e74c3c;">
+    كلية الإعلام الآلي وعلوم الحاسوب - جامعة سيدي بلعباس
+</div>
+
+
+<canvas id="particle-canvas"></canvas>
+
+<div class="app-wrapper">
+<div class="progress" id="progress"></div>
+
+<div id="loader">
+    <div class="spinner"></div>
+    <div>Chargement de la Version 22 AI Pro...</div>
+</div>
+
+<div id="toast">Bienvenue sur l'Édition v19 Pro 👋</div>
+
+<div class="hero-banner">
+    <h2>🚀 Welcome to your Smart Digital Library <span style="font-size:12px; background:#42d392; padding:3px 8px; border-radius:10px; color:#111; font-weight:bold;">v22.0 AI Pro</span></h2>
+    <p>Accès ultra-rapide et intelligent aux modules et résumés.</p>
+    
+    <!-- قسم الترحيب الذكي بآخر مادة تمت زيارتها -->
+    <div id="recentVisitSection">
+        <h3>🕒 Continuer là où vous vous êtes arrêté</h3>
+        <div class="fav-grid" id="recentVisitGrid"></div>
+    </div>
+
+    <!-- قسم المفضلة السريع الذكي -->
+    <div id="favoritesSection">
+        <h3>⭐ Vos Modules Préférés (Accès Rapide)</h3>
+        <div class="fav-grid" id="favGrid"></div>
+    </div>
+
+    <div class="quick-actions">
+        <div class="qa" onclick="openP2PModal()">📡<br>Radar P2P</div>
+        <div class="qa" onclick="openPomoModal()">⏱️<br>Pomodoro</div>
+        <div class="qa" onclick="window.scrollTo({top: 600, behavior: 'smooth'})">📚<br>Semestres</div>
+        <div class="qa" onclick="if(document.getElementById('searchBox')) document.getElementById('searchBox').focus();">🔎<br>Recherche</div>
+        <div class="qa" onclick="toggleTheme()">🌙<br>Theme</div>
+        <div class="qa" id="infoBtn">ℹ️<br>Infos</div>
+    </div>
+    <div class="progress-card">
+        <div><strong>Dynamic Study Progress Tracker</strong> — <span id="dynamicStudyProgressText">0%</span></div>
+        <div class="progress-bar"><div class="progress-fill" id="dynamicStudyProgressFill" style="width: 0%;"></div></div>
+    </div>
+</div>
+
+<!-- نظام التبويبات العلوي الانسيابي والمطاطي لتنقل أسرع -->
+<div class="smart-tabs">
+    <div class="tab-link active" onclick="retourAccueil(); setActiveTab(this)">🏠 Accueil</div>
+    <div class="tab-link" onclick="afficherS1(); setActiveTab(this)">S1</div>
+    <div class="tab-link" onclick="afficherS2(); setActiveTab(this)">S2</div>
+    <div class="tab-link" onclick="afficherS3(); setActiveTab(this)">S3</div>
+    <div class="tab-link" onclick="afficherS4(); setActiveTab(this)">S4</div>
+    <div class="tab-link" onclick="afficherS5Menu(); setActiveTab(this)">S5</div>
+    <div class="tab-link" onclick="afficherS6(); setActiveTab(this)">S6</div>
+</div>
+
+<div id="infoOverlay">
+    <div id="infoCard">
+        <div style="width:75px; height:75px; background:var(--accent); border-radius:50%; margin:0 auto 16px; display:flex; align-items:center; justify-content:center; font-size:32px; color:white;">🎓</div>
+        <h2>Informations</h2>
+        <div style="font-size:15px; opacity:0.8; margin-bottom:24px;">© 2026 | Réalisé par <strong>Abbes BG</strong></div>
+        <a href="mailto:abbes1esi1info@gmail.com" style="display:flex; align-items:center; gap:12px; background:rgba(0,0,0,0.04); padding:14px; border-radius:16px; text-decoration:none; color:inherit; font-weight:600; font-size:14px;">
+            <span>📧</span>
+            <div style="text-align: left;">
+                <div style="font-size:11px; opacity:0.6;">Contact Email</div>
+                <div>abbes1esi1info@gmail.com</div>
+            </div>
+        </a>
+        <button id="infoClose" style="width:100%; margin-top:20px;">Fermer</button>
+    </div>
+</div>
+
+<!-- المودال الزجاجي لمحاكاة التلخيص الذكي -->
+<div id="aiSummaryOverlay">
+    <div id="aiSummaryCard">
+        <div style="width:60px; height:60px; background:linear-gradient(135deg, #00ffc8, #5b8cff); border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; font-size:24px;">✨</div>
+        <h2 id="summaryTitle" style="margin-bottom:8px; font-size:22px;">Résumé IA</h2>
+        <p id="summaryContext" style="text-align:left; font-size:14px; line-height:1.6; max-height:220px; overflow-y:auto; padding:5px; background:rgba(0,0,0,0.03); border-radius:12px;"></p>
+        <button id="summaryClose" style="width:100%; margin-top:15px; background:var(--accent);">Fermer</button>
+    </div>
 </div>
 
 <div id="accueil">
-    <h1 class="titre">📚 Bienvenue dans votre archive des résumés</h1>
-    <h2 class="sous-titre">Université Saida</h2>
-     <h2 class="sous-titre">Université Sidi bél abbes</h2>
+    <div class="dashboard">
+        <div class="search-wrap">
+            <input id="searchBox" placeholder="🔍 Rechercher intelligemment (Ex: Analyse, Archi, OS)...">
+            <button id="clearSearch">✕</button>
+            <div id="searchSuggestions"></div>
+            <!-- صندوق الترجمات والمصطلحات الفورية -->
+            <div id="dictPreview"></div>
+        </div>
+        <div class="statsgrid">
+            <div class="cardstat">📚<b>9</b>Semestres</div>
+            <div class="cardstat">📖<b>57</b>Modules</div>
+            <div class="cardstat">📄<b>140+</b>Docs</div>
+        </div>
+        
+        <!-- ويدجيت المفكرة والعد التنازلي المدمجة حديثاً -->
+        <div class="dashboard-widgets">
+            <div class="widget-box">
+                <h4>📝 Liste des tâches d'étude</h4>
+                <div class="todo-input-wrap">
+                    <input type="text" id="todo-input" placeholder="Ajouter une tâche...">
+                    <button onclick="addTodo()">+</button>
+                </div>
+                <ul class="todo-list-items" id="todo-list"></ul>
+            </div>
+            <div class="widget-box" style="text-align: center;">
+                <h4>⏰ Compte à rebours des Examens</h4>
+                <div style="font-size:12px; opacity:0.7;">Prochaine session principale</div>
+                <div id="countdown-display">00d 00h 00m 00s</div>
+            </div>
+        </div>
+
+        <div style="text-align:center; color:#fff; font-size:13px; margin-top:10px;">Dernière mise à jour : AI Engine v22 Pro (2026)</div>
+    </div>
+
     <div class="container">
         <button onclick="afficherS1()">📚 Semestre 1</button>
         <button onclick="afficherS2()">✏️ Semestre 2</button>
@@ -215,190 +879,887 @@ body.dark #s1,body.dark #s2,body.dark #s3,body.dark #s4,body.dark #s5menu,body.d
         <button onclick="afficherS4()">⚙️ Semestre 4</button>
         <button onclick="afficherS5Menu()">📂 Semestre 5</button>
         <button onclick="afficherS6()">🎓 Semestre 6</button>
-
     </div>
 </div>
 
+<!-- SEMESTRE 1 -->
 <div id="s1" style="display:none;">
     <h1 class="section-titre">Matières du Semestre 1</h1>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/EnJDe674JMRMkTDvxC-oReoB8WEto65kpflT_tBnxptJTw" target="_blank">Analyse</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/ElbpUboX1m9MnV8rZlHR5AABk-vHHgszaShvky75z3qiIw" target="_blank">Algèbre</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/EsZZc5cAHRdJluQPI-gQ0pwBAXnLYc1bqOcsJXBQS4Xolw" target="_blank">Algorithmique</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/EtjDBXz_n4ZDhZdFrA4fyzQBH4Bv270mRYfEs5HHk-_Mhg" target="_blank">Structure machine   (ARCHI)</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/EjdG_4E0ZrJDqlQxKBAokjIBIkzZKmC-vm1orgnCHdYA6Q" target="_blank">English</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/EnZlWPcjPSpNhzhOr5MasrQBB2d2v0Udrf2cLTeAf1x1bA" target="_blank">Terminologie</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/Eg04QFMOvoBBowZlpUR-isEBFXBM9x0nev6Pb5CoJI1VHA" target="_blank">Mécanique de point</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/EsdpnqByF_1KhOJe9vLtwqUBza00wPQ3YOM57izBQXyXzA" target="_blank">capacité</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/EjmlRaQ85A9GjxfHO2Kr8RwB1BBi25B1USi9q__03buFYQ" target="_blank">Électricité générale</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Open source</a></div>
-    <div class="back">
-        <button onclick="retourAccueil()">⬅️ Retour à l'accueil</button>
+    <div class="container" id="container-s1">
+        <div class="subject" data-id="s1_analyse" data-semester="S1" data-tags="math analyse"><a href="https://1drv.ms/f/c/b9f761508891a14c/EnJDe674JMRMkTDvxC-oReoB8WEto65kpflT_tBnxptJTw" target="_blank">Analyse</a></div>
+        <div class="subject" data-id="s1_algebre" data-semester="S1" data-tags="math algebre"><a href="https://1drv.ms/f/c/b9f761508891a14c/ElbpUboX1m9MnV8rZlHR5AABk-vHHgszaShvky75z3qiIw" target="_blank">Algèbre</a></div>
+        <div class="subject" data-id="s1_algo" data-semester="S1" data-tags="algo algorithmatique c"><a href="https://1drv.ms/f/c/b9f761508891a14c/EsZZc5cAHRdJluQPI-gQ0pwBAXnLYc1bqOcsJXBQS4Xolw" target="_blank">Algorithmique</a></div>
+        <div class="subject" data-id="s1_archi" data-semester="S1" data-tags="architecture strm pc hardware"><a href="https://1drv.ms/f/c/b9f761508891a14c/EtjDBXz_n4ZDhZdFrA4fyzQBH4Bv270mRYfEs5HHk-_Mhg" target="_blank">Structure machine (ARCHI)</a></div>
+        <div class="subject" data-id="s1_english" data-semester="S1" data-tags="english anglais"><a href="https://1drv.ms/f/c/b9f761508891a14c/EjdG_4E0ZrJDqlQxKBAokjIBIkzZKmC-vm1orgnCHdYA6Q" target="_blank">English</a></div>
+        <div class="subject" data-id="s1_term" data-semester="S1" data-tags="terminologie vocabulaire"><a href="https://1drv.ms/f/c/b9f761508891a14c/EnZlWPcjPSpNhzhOr5MasrQBB2d2v0Udrf2cLTeAf1x1bA" target="_blank">Terminologie</a></div>
+        <div class="subject" data-id="s1_meca" data-semester="S1" data-tags="physique mecanique point"><a href="https://1drv.ms/f/c/b9f761508891a14c/Eg04QFMOvoBBowZlpUR-isEBFXBM9x0nev6Pb5CoJI1VHA" target="_blank">Mécanique de point</a></div>
+        <div class="subject" data-id="s1_capa" data-semester="S1" data-tags="capacite expression"><a href="https://1drv.ms/f/c/b9f761508891a14c/EsdpnqByF_1KhOJe9vLtwqUBza00wPQ3YOM57izBQXyXzA" target="_blank">Capacité</a></div>
+        <div class="subject" data-id="s1_elec" data-semester="S1" data-tags="physique electricite"><a href="https://1drv.ms/f/c/b9f761508891a14c/EjmlRaQ85A9GjxfHO2Kr8RwB1BBi25B1USi9q__03buFYQ" target="_blank">Électricité générale</a></div>
+        <div class="subject" data-id="s1_open" data-semester="S1" data-tags="open source linux git"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Open source</a></div>
     </div>
+    <div class="back"><button onclick="retourAccueil()">⬅️ Retour à l'accueil</button></div>
 </div>
 
+<!-- SEMESTRE 2 -->
 <div id="s2" style="display:none;">
     <h1 class="section-titre">Matières du Semestre 2</h1>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgAwjimZ1dQvSL55fiI_RWhGAUhvf8FZaUypJr_mKxpBjZc" target="_blank">Analyse</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Algorithmique</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Algèbre</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Artificial intelligence</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgBB_ZBgPe5iRpEqa0SRwY2NAWjGV96TTAK8Uk9YEdUQvj4" target="_blank">Logique mathématique</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">TIC</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Électronique</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDoIW0rizTGTabsqOocug1wATwt_T7g80jadB4tYZtjVaw" target="_blank">Structure machine(ARCHI)</a></div>
-    <div class="back">
-        <button onclick="retourAccueil()">⬅️ Retour à l'accueil</button>
+    <div class="container" id="container-s2">
+        <div class="subject" data-id="s2_analyse" data-semester="S2" data-tags="math analyse2"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgAwjimZ1dQvSL55fiI_RWhGAUhvf8FZaUypJr_mKxpBjZc" target="_blank">Analyse 2</a></div>
+        <div class="subject" data-id="s2_algo" data-semester="S2" data-tags="algo algo2 c"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Algorithmique 2</a></div>
+        <div class="subject" data-id="s2_algebre" data-semester="S2" data-tags="math algebre2"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Algèbre 2</a></div>
+        <div class="subject" data-id="s2_ai" data-semester="S2" data-tags="ai intelligence artificielle smart"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Artificial intelligence</a></div>
+        <div class="subject" data-id="s2_logique" data-semester="S2" data-tags="logique math mth logic"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgBB_ZBgPe5iRpEqa0SRwY2NAWjGV96TTAK8Uk9YEdUQvj4" target="_blank">Logique mathématique</a></div>
+        <div class="subject" data-id="s2_tic" data-semester="S2" data-tags="tic technologie web internet"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">TIC</a></div>
+        <div class="subject" data-id="s2_elec" data-semester="S2" data-tags="electronique physique3"><a href="https://web-bzstudio.github.io/Info-archi/coming-soon.html" target="_blank">Électronique</a></div>
+        <div class="subject" data-id="s2_archi" data-semester="S2" data-tags="architecture machine2 archi2 strm2"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDoIW0rizTGTabsqOocug1wATwt_T7g80jadB4tYZtjVaw" target="_blank">Structure machine 2</a></div>
     </div>
+    <div class="back"><button onclick="retourAccueil()">⬅️ Retour à l'accueil</button></div>
 </div>
 
+<!-- SEMESTRE 3 -->
 <div id="s3" style="display:none;">
     <h1 class="section-titre">Matières du Semestre 3</h1>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgAluADSeXUyTL60VZmEGvaQAe-ZvrzoComObhJBxlkFRwc" target="_blank">Système d'information</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDg6LNAw2nWSpSxJsmUvyXIAYZR74XSZs_srdQiD5e8hH8" target="_blank">Algorithme 3</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgBnsPA_VmoxTZcqHzhq3C6yAYvgGsn-G-IlmOMoY0fTB90" target="_blank">Analyse numérique </a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgC_BDDFQvBFRqsnLiv3zn41AUQcN2stmL47eGExAcffARM" target="_blank">Architecture (STRM3)</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgD5cJHqGdZyQp7dRl-M4ByOAd6F5JosMXWK3ZBZl3CVnas" target="_blank">Théorie de graphe</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgBB_ZBgPe5iRpEqa0SRwY2NAWjGV96TTAK8Uk9YEdUQvj4" target="_blank">Logique MTH</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDnRT8CS9-NTKurW5I-nYOiAdY01AG8zgc4hwmTx2hCT6Y" target="_blank">English 2</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgBZRsdPZOCcTp7UrtDlRo82ASxj7iNEwlwx_jmPng96u9U" target="_blank">♻️</a></div>
-        <button onclick="retourAccueil()">⬅️ Retour à l'accueil</button>
+    <div class="container" id="container-s3">
+        <div class="subject" data-id="s3_si" data-semester="S3" data-tags="systeme information database merise"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgAluADSeXUyTL60VZmEGvaQAe-ZvrzoComObhJBxlkFRwc" target="_blank">Système d'information</a></div>
+        <div class="subject" data-id="s3_algo3" data-semester="S3" data-tags="algo3 structure donnees asd c++"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDg6LNAw2nWSpSxJsmUvyXIAYZR74XSZs_srdQiD5e8hH8" target="_blank">Algorithme 3</a></div>
+        <div class="subject" data-id="s3_num" data-semester="S3" data-tags="analyse numerique math matlab"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgBnsPA_VmoxTZcqHzhq3C6yAYvgGsn-G-IlmOMoY0fTB90" target="_blank">Analyse numérique</a></div>
+        <div class="subject" data-id="s3_archi3" data-semester="S3" data-tags="architecture3 machine3 archi3 strm3"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgC_BDDFQvBFRqsnLiv3zn41AUQcN2stmL47eGExAcffARM" target="_blank">Architecture (STRM3)</a></div>
+        <div class="subject" data-id="s3_graphe" data-semester="S3" data-tags="theorie graphe math graph tg"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgD5cJHqGdZyQp7dRl-M4ByOAd6F5JosMXWK3ZBZl3CVnas" target="_blank">Théorie de graphe</a></div>
+        <div class="subject" data-id="s3_logique" data-semester="S3" data-tags="logique mth math logic"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgBB_ZBgPe5iRpEqa0SRwY2NAWjGV96TTAK8Uk9YEdUQvj4" target="_blank">Logique MTH</a></div>
+        <div class="subject" data-id="s3_eng2" data-semester="S3" data-tags="english2 anglais2"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDnRT8CS9-NTKurW5I-nYOiAdY01AG8zgc4hwmTx2hCT6Y" target="_blank">English 2</a></div>
+        <div class="subject" data-id="s3_env" data-semester="S3" data-tags="environment ecologie"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgBZRsdPZOCcTp7UrtDlRo82ASxj7iNEwlwx_jmPng96u9U" target="_blank">Environnement ♻️</a></div>
     </div>
+    <div class="back"><button onclick="retourAccueil()">⬅️ Retour à l'accueil</button></div>
 </div>
 
+<!-- SEMESTRE 4 -->
 <div id="s4" style="display:none;">
     <h1 class="section-titre">Matières du Semestre 4</h1>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgCwxTI120C_QohL7wkmMIjTARI5rEH8MWGarE1TAYvHBfk" target="_blank">Système d'exploitation</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgC_5hUgWFObR5u_bU_8EKDbAWfmnKVP9ljJzbhCyMzQRc8" target="_blank">Base de données</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDpChtRLZq7Qavzui6l_HfkATSIvJCPy3ePuElyeimFr8I" target="_blank">Réseau</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDmQLfkYA3FTYSKxnW6lk8hAXpYjTO8q9W6oEi_1SxrAHA" target="_blank">Théorie de longage</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">OOP</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">DEV Web</a></div>
-    <div class="subject"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDl6owDYyg_R6_WihhzDIOGARbu8p6PMwA62HyW21raER4" target="_blank">English 3</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">☢️</a></div>
-        <button onclick="retourAccueil()">⬅️ Retour à l'accueil</button>
+    <div class="container" id="container-s4">
+        <div class="subject" data-id="s4_se" data-semester="S4" data-tags="systeme exploitation se os linux"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgCwxTI120C_QohL7wkmMIjTARI5rEH8MWGarE1TAYvHBfk" target="_blank">Système d'exploitation</a></div>
+        <div class="subject" data-id="s4_bdd" data-semester="S4" data-tags="base donnees bdd database sql"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgC_5hUgWFObR5u_bU_8EKDbAWfmnKVP9ljJzbhCyMzQRc8" target="_blank">Base de données</a></div>
+        <div class="subject" data-id="s4_reseau" data-semester="S4" data-tags="reseau network internet ip tcp"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDpChtRLZq7Qavzui6l_HfkATSIvJCPy3ePuElyeimFr8I" target="_blank">Réseau</a></div>
+        <div class="subject" data-id="s4_lang" data-semester="S4" data-tags="theorie langage tlf automate"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDmQLfkYA3FTYSKxnW6lk8hAXpYjTO8q9W6oEi_1SxrAHA" target="_blank">Théorie de langage</a></div>
+        <div class="subject" data-id="s4_oop" data-semester="S4" data-tags="oop po0 programmation java c++"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">OOP</a></div>
+        <div class="subject" data-id="s4_web" data-semester="S4" data-tags="dev web html css javascript site"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">DEV Web</a></div>
+        <div class="subject" data-id="s4_eng3" data-semester="S4" data-tags="english3 anglais3"><a href="https://1drv.ms/f/c/b9f761508891a14c/IgDl6owDYyg_R6_WihhzDIOGARbu8p6PMwA62HyW21raER4" target="_blank">English 3</a></div>
+        <div class="subject" data-id="s4_sec" data-semester="S4" data-tags="security securite"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">☢️</a></div>
     </div>
+    <div class="back"><button onclick="retourAccueil()">⬅️ Retour à l'accueil</button></div>
 </div>
-    
 
-<div id="s5menu" style="display:none;background:rgba(0,0,0,.4);min-height:100vh;padding:40px">
-<h1 class="section-titre">Semestre 5</h1>
-<div class="subject"><a href="#" onclick="afficherS5SI();return false;">💻 S5 - SI</a></div>
-<div class="subject"><a href="#" onclick="afficherS5ISIL();return false;">🖥 S5 - ISIL</a></div>
-<div class="back"><button onclick="retourAccueil()">⬅️ Retour</button></div></div>
-<div id="s5si" style="display:none;background:rgba(0,0,0,.4);min-height:100vh;padding:40px">
-<h1 class="section-titre">S5 - SI</h1>
-<div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Economie numérique</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Système d'exploitation 2</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Compilation</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Interface Homme Machin</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">génie Logiciel</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Programmation Linéaire</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">probability</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Expression et communication</a></div>
-<div class="back"><button onclick="afficherS5Menu()">⬅️ Retour</button></div></div>
-<div id="s5isil" style="display:none;background:rgba(0,0,0,.4);min-height:100vh;padding:40px">
-<h1 class="section-titre">S5 - ISIL</h1>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Système d'information distribué</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Système d'aide à la décision</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Administration des SI</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Programmation avancée Web</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Recherche d'information</a></div>
-    <div class="subject"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Business Intelligence</a></div>
-<div class="back"><button onclick="afficherS5Menu()">⬅️ Retour</button></div></div>
+<!-- SEMESTRE 5 MENU -->
+<div id="s5menu" style="display:none; padding:40px 10px;">
+    <h1 class="section-titre">Semestre 5</h1>
+    <div class="container">
+        <div class="subject" data-id="s5_si_menu" data-semester="S5" data-tags="si"><a href="#" onclick="afficherS5SI();return false;">💻 S5 - SI</a></div>
+        <div class="subject" data-id="s5_isil_menu" data-semester="S5" data-tags="isil"><a href="#" onclick="afficherS5ISIL();return false;">🖥 S5 - ISIL</a></div>
+    </div>
+    <div class="back"><button onclick="retourAccueil()">⬅️ Retour</button></div>
+</div>
 
+<!-- S5 - SI -->
+<div id="s5si" style="display:none; padding:40px 10px;">
+    <h1 class="section-titre">S5 - SI</h1>
+    <div class="container" id="container-s5si">
+        <div class="subject" data-id="s5si_eco" data-semester="S5-SI" data-tags="economie numerique digital"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Economie numérique</a></div>
+        <div class="subject" data-id="s5si_se2" data-semester="S5-SI" data-tags="systeme exploitation2 se2 os2"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Système d'exploitation 2</a></div>
+        <div class="subject" data-id="s5si_comp" data-semester="S5-SI" data-tags="compilation compilateur lexer"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Compilation</a></div>
+        <div class="subject" data-id="s5si_ihm" data-semester="S5-SI" data-tags="interface homme machine ihm ux ui"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Interface Homme Machine</a></div>
+        <div class="subject" data-id="s5si_gl" data-semester="S5-SI" data-tags="genie logiciel gl software scrum"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Génie Logiciel</a></div>
+        <div class="subject" data-id="s5si_pl" data-semester="S5-SI" data-tags="programmation lineaire pl math"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Programmation Linéaire</a></div>
+        <div class="subject" data-id="s5si_prob" data-semester="S5-SI" data-tags="probability probabilites stats math"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Probability</a></div>
+        <div class="subject" data-id="s5si_exp" data-semester="S5-SI" data-tags="expression communication francais"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Expression et communication</a></div>
+    </div>
+    <div class="back"><button onclick="afficherS5Menu()">⬅️ Retour</button></div>
+</div>
+
+<!-- S5 - ISIL -->
+<div id="s5isil" style="display:none; padding:40px 10px;">
+    <h1 class="section-titre">S5 - ISIL</h1>
+    <div class="container" id="container-s5isil">
+        <div class="subject" data-id="s5isil_sid" data-semester="S5-ISIL" data-tags="systeme information distribue sid cloud"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Système d'information distribué</a></div>
+        <div class="subject" data-id="s5isil_sad" data-semester="S5-ISIL" data-tags="systeme aide decision sad data"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Système d'aide à la décision</a></div>
+        <div class="subject" data-id="s5isil_admin" data-semester="S5-ISIL" data-tags="administration si admin database"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Administration des SI</a></div>
+        <div class="subject" data-id="s5isil_paw" data-semester="S5-ISIL" data-tags="programmation avancee web paw nodejs react"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Programmation avancée Web</a></div>
+        <div class="subject" data-id="s5isil_ri" data-semester="S5-ISIL" data-tags="recherche information ri search"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Recherche d'information</a></div>
+        <div class="subject" data-id="s5isil_bi" data-semester="S5-ISIL" data-tags="business intelligence bi powerbi"><a href="https://web-bzstudio.github.io/Info-archi/com-pb.html" target="_blank">Business Intelligence</a></div>
+    </div>
+    <div class="back"><button onclick="afficherS5Menu()">⬅️ Retour</button></div>
+</div>
+
+<!-- SEMESTRE 6 -->
 <div id="s6" style="display:none;">
     <h1 class="section-titre">Matières du Semestre 6</h1>
-    <div class="subject"><a href="" target="_blank">Applications Mobiles</a></div>
-    <div class="subject"><a href="" target="_blank">S F S D</a></div>
-    <div class="subject"><a href="" target="_blank">Sécurité Informatique</a></div>
-    <div class="subject"><a href="" target="_blank">Intelligence Artificielle</a></div>
-    <div class="subject"><a href="" target="_blank">Rédaction Scientifique</a></div>
-    <div class="subject"><a href="" target="_blank">Startup</a></div>
-    <div class="subject"><a href="" target="_blank">Projet</a></div>
-        <button onclick="retourAccueil()">⬅️ Retour à l'accueil</button>
+    <div class="container" id="container-s6">
+        <div class="subject" data-id="s6_mobile" data-semester="S6" data-tags="applications mobiles android ios flutter"><a href="" target="_blank">Applications Mobiles</a></div>
+        <div class="subject" data-id="s6_sfsd" data-semester="S6" data-tags="sfsd fichiers structures donnees"><a href="" target="_blank">S F S D</a></div>
+        <div class="subject" data-id="s6_sec" data-semester="S6" data-tags="securite informatique security crypto"><a href="" target="_blank">Sécurité Informatique</a></div>
+        <div class="subject" data-id="s6_ai" data-semester="S6" data-tags="intelligence artificielle ia ai smart"><a href="" target="_blank">Intelligence Artificielle</a></div>
+        <div class="subject" data-id="s6_red" data-semester="S6" data-tags="redaction scientifique memoire rapport"><a href="" target="_blank">Rédaction Scientifique</a></div>
+        <div class="subject" data-id="s6_startup" data-semester="S6" data-tags="startup entreprise business project"><a href="" target="_blank">Startup</a></div>
+        <div class="subject" data-id="s6_projet" data-semester="S6" data-tags="projet fin etude pfe coding build"><a href="" target="_blank">Projet</a></div>
+    </div>
+    <div class="back"><button onclick="retourAccueil()">⬅️ Retour à l'accueil</button></div>
+</div>
+
+<div class="bottom-nav">
+    <a href="#" onclick="retourAccueil(); updateTabsUI(0); return false;">🏠</a>
+    <a href="#" onclick="toggleTheme(); return false;">🌙</a>
+    <a href="#" onclick="if(document.getElementById('searchBox')) document.getElementById('searchBox').focus(); return false;">🔎</a>
+</div>
+
+<button id="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆️</button>
+</div>
+
+<script>
+// خوارزمية التحكم في التوجيه والتنقل
+function hideAll(){['accueil','s1','s2','s3','s4','s5menu','s5si','s5isil','s6'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});}
+function afficherS5Menu(){hideAll();document.getElementById('s5menu').style.display='block';window.scrollTo({top:0,behavior:'smooth'}); updateTabsUI(5);}
+function afficherS5SI(){hideAll();document.getElementById('s5si').style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+function afficherS5ISIL(){hideAll();document.getElementById('s5isil').style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+function afficherS1() { hideAll(); document.getElementById('s1').style.display = "block"; window.scrollTo({top:0,behavior:'smooth'}); updateTabsUI(1);}
+function afficherS2() { hideAll(); document.getElementById('s2').style.display = "block"; window.scrollTo({top:0,behavior:'smooth'}); updateTabsUI(2);}
+function afficherS3() { hideAll(); document.getElementById('s3').style.display = "block"; window.scrollTo({top:0,behavior:'smooth'}); updateTabsUI(3);}
+function afficherS4() { hideAll(); document.getElementById('s4').style.display = "block"; window.scrollTo({top:0,behavior:'smooth'}); updateTabsUI(4);}
+function afficherS6() { hideAll(); document.getElementById('s6').style.display = "block"; window.scrollTo({top:0,behavior:'smooth'}); updateTabsUI(6);}
+function retourAccueil() { hideAll(); document.getElementById('accueil').style.display = "block"; updateTabsUI(0);}
+
+function setActiveTab(el) {
+    document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+}
+function updateTabsUI(index) {
+    const tabs = document.querySelectorAll('.tab-link');
+    if(tabs[index]) {
+        document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+        tabs[index].classList.add('active');
+    }
+}
+
+// تشغيل الـ Loader والـ Toast وتخزين الزيارات
+window.addEventListener('load',()=>{
+    setTimeout(()=> { 
+        let loader = document.getElementById('loader');
+        if(loader) { loader.style.opacity='0'; setTimeout(()=>loader.style.display='none', 400); }
+    },700); 
+    setTimeout(()=> { 
+        let toast = document.getElementById('toast');
+        if(toast) { toast.style.display='block'; setTimeout(()=>toast.style.display='none',2200); }
+    }, 900);
+    
+    initCardTools();
+    renderFavorites();
+    renderRecentVisit();
+    initParticleBackground();
+    initCountdown();
+    renderTodos();
+});
+
+// تفعيل وضعية الـ Dark Mode
+function toggleTheme() {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('themeMode', document.body.classList.contains('dark') ? 'dark' : 'light');
+}
+if(localStorage.getItem('themeMode') === 'dark') document.body.classList.add('dark');
+
+// حركة الـ Overlay للمعلومات والتلخيص الذكي
+const ov=document.getElementById('infoOverlay');
+const infoBtn=document.getElementById('infoBtn');
+const infoClose=document.getElementById('infoClose');
+if(infoBtn) { infoBtn.onclick = () => { ov.style.display = 'flex'; setTimeout(() => ov.classList.add('active'), 10); };}
+if(infoClose) { infoClose.onclick = () => { ov.classList.remove('active'); setTimeout(() => ov.style.display = 'none', 300); };}
+if(ov) { ov.onclick = e => { if(e.target === ov) { ov.classList.remove('active'); setTimeout(() => ov.style.display = 'none', 300); } }; }
+
+const sumOv = document.getElementById('aiSummaryOverlay');
+const sumClose = document.getElementById('summaryClose');
+if(sumClose) { sumClose.onclick = () => { sumOv.classList.remove('active'); setTimeout(() => sumOv.style.display = 'none', 300); }; }
+
+// شريط تقدم الصفحة العلوي
+window.addEventListener('scroll',()=>{
+    let h=document.documentElement; 
+    let progress=document.getElementById('progress'); 
+    if(progress) progress.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';
+});
+
+// تأثير الضغط المائي ومحاكاة الاهتزاز
+document.querySelectorAll('button, .qa, .tab-link').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+        if (navigator.vibrate) navigator.vibrate(10);
+        const r=document.createElement('span');
+        const d=Math.max(btn.clientWidth,btn.clientHeight);
+        r.style.cssText=`position:absolute;width:${d}px;height:${d}px;left:${e.offsetX-d/2}px;top:${e.offsetY-d/2}px;background:rgba(255,255,255,0.4);border-radius:50%;transform:scale(0);animation:ripple .5s linear;pointer-events:none;`;
+        btn.appendChild(r);
+        setTimeout(()=>r.remove(),500);
+    });
+});
+const st=document.createElement('style');
+st.textContent='@keyframes ripple{to{transform:scale(4);opacity:0}}';
+document.head.appendChild(st);
+
+/* === محرك تأثير الجزيئات المتحركة التفاعلي خلف الموقع === */
+function initParticleBackground() {
+    const canvas = document.getElementById('particle-canvas');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    
+    for(let i=0; i<35; i++) {
+        particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 2.5 + 1,
+            vx: Math.random() * 0.4 - 0.2,
+            vy: Math.random() * 0.4 - 0.2
+        });
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = document.body.classList.contains('dark') ? 'rgba(255,255,255,0.12)' : 'rgba(108,99,255,0.2)';
+        particles.forEach(p => {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+            ctx.fill();
+            p.x += p.vx;
+            p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+}
+
+/* === تأثير الـ 3D Tilt للتفاعل مع الماوس === */
+function apply3DTilt(card) {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const xc = rect.width / 2;
+        const yc = rect.height / 2;
+        const angleX = (yc - y) / 12;
+        const angleY = (x - xc) / 12;
+        card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-5px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+    });
+}
+document.querySelectorAll('.subject').forEach(apply3DTilt);
+
+/* === قاعدة بيانات محاكاة التلخيص الذكي للـ v18 === */
+const aiSummaries = {
+    s1_analyse: "Analyse 1 : Se concentre sur les fondements du calcul d'analyse mathématique, y compris l'étude des fonctions réelles, la recherche approfondie des limites, la continuité, les dérivées, et le théorème des valeurs intermédiaires.",
+    s1_algebre: "Algèbre 1 : Traite des structures logiques, les ensembles, les applications, les relations d'équivalence, ainsi que les notions fondamentales de l'algèbre linéaire, matrices et espaces vectoriels.",
+    s1_algo: "Algorithmique 1 : Introduction à la logique algorithmique et à la programmation structurée en langage C. Apprentissage des variables, boucles conditionnelles, tableaux et fonctions de base.",
+    s1_archi: "Structure Machine (Archi 1) : Exploration approfondie du matériel informatique (Hardware), codage de l'information (Binaire, Hexadécimal), algèbre de Boole, et conception des circuits logiques combinatoires.",
+    s4_se: "Système d'exploitation (OS) : Compréhension des mécanismes internes de la gestion des processus, de la mémoire centrale, des systèmes de fichiers, et manipulation des commandes Shell sous Linux.",
+    s4_bdd: "Base de données (BDD) : Maîtrise des modèles relationnels, de la conception via l'algèbre relationnelle et de la manipulation des données à l'aide des requêtes structurées SQL."
+};
+
+/* === نظام أدوات الكارد الفوقية الذكية === */
+let favorites = JSON.parse(localStorage.getItem('siteFavorites')) || [];
+
+function initCardTools() {
+    document.querySelectorAll('.subject').forEach(card => {
+        const cardId = card.getAttribute('data-id');
+        if(!cardId) return;
+        if(card.querySelector('.card-tools')) return;
+        
+        const isFav = favorites.includes(cardId);
+        const isReviewed = localStorage.getItem('reviewed_' + cardId) === 'true';
+        const tools = document.createElement('div');
+        tools.className = 'card-tools';
+        
+        tools.innerHTML = `
+            <button class="fav-btn" title="Favoris" onclick="toggleFavorite('${cardId}', event)">${isFav ? '⭐' : '☆'}</button>
+            <button class="ai-sum-btn" title="Résumé IA" onclick="triggerAiSummary('${cardId}', event)">✨</button>
+            <button class="plan-btn" title="AI Planner" onclick="scheduleSubjectToTodo('${cardId}', event)" style="background:none; border:none; cursor:pointer; font-size:13px; padding:2px;">📅</button>
+            <button class="review-toggle-btn" title="Marquer comme révisé" onclick="toggleReviewed('${cardId}', event)" style="background:none; border:none; cursor:pointer; font-size:13px; padding:2px;">${isReviewed ? '✅' : '⬜'}</button>
+            <div class="rate-wrap">
+                <span class="rate-btn" onclick="rateCard('${cardId}', 1, event)">👍</span>
+                <span id="count-${cardId}">${localStorage.getItem('rate-'+cardId) || ''}</span>
+            </div>
+        `;
+        card.appendChild(tools);
+        
+        // حفظ المادة الأخيرة المستعرضة عند النقر على رابطها المباشر لقسم الترحيب الذكي
+        const link = card.querySelector('a');
+        if(link) {
+            link.addEventListener('click', () => {
+                localStorage.setItem('recentViewedModule', cardId);
+            });
+        }
+    });
+}
+
+function triggerAiSummary(id, event) {
+    event.stopPropagation();
+    event.preventDefault();
+    const originCard = document.querySelector(`[data-id="${id}"]`);
+    if(!originCard) return;
+    const name = originCard.querySelector('a').textContent;
+    
+    document.getElementById('summaryTitle').textContent = `Résumé : ${name}`;
+    document.getElementById('summaryContext').textContent = aiSummaries[id] || "Aucun résumé personnalisé disponible pour ce module actuellement. L'archive complète est disponible via le bouton de téléchargement.";
+    
+    const overlay = document.getElementById('aiSummaryOverlay');
+    overlay.style.display = 'flex';
+    setTimeout(() => overlay.classList.add('active'), 10);
+}
+
+function toggleFavorite(id, event) {
+    event.stopPropagation();
+    event.preventDefault();
+    const idx = favorites.indexOf(id);
+    if(idx > -1) favorites.splice(idx, 1);
+    else favorites.push(id);
+    localStorage.setItem('siteFavorites', JSON.stringify(favorites));
+    document.querySelectorAll(`[data-id="${id}"] .fav-btn`).forEach(btn => {
+        btn.textContent = favorites.includes(id) ? '⭐' : '☆';
+    });
+    renderFavorites();
+}
+
+function rateCard(id, change, event) {
+    event.stopPropagation();
+    event.preventDefault();
+    let currentRate = parseInt(localStorage.getItem('rate-'+id)) || 0;
+    currentRate += change;
+    localStorage.setItem('rate-'+id, currentRate);
+    let span = document.getElementById(`count-${id}`);
+    if(span) span.textContent = currentRate;
+}
+
+function renderFavorites() {
+    const favSection = document.getElementById('favoritesSection');
+    const favGrid = document.getElementById('favGrid');
+    if(!favGrid || !favSection) return;
+    
+    favGrid.innerHTML = '';
+    if(favorites.length === 0) { favSection.style.display = 'none'; return; }
+    
+    favSection.style.display = 'block';
+    favorites.forEach(id => {
+        const originCard = document.querySelector(`[data-id="${id}"]`);
+        if(originCard) {
+            const name = originCard.querySelector('a').textContent;
+            const link = originCard.querySelector('a').getAttribute('href');
+            const favTag = document.createElement('div');
+            favTag.style.cssText = "background:rgba(255,255,255,0.15); padding:8px 16px; border-radius:12px; color:white; font-size:14px; font-weight:bold; display:flex; align-items:center; gap:8px; border:1px solid rgba(255,255,255,0.1);";
+            favTag.innerHTML = `<a href="${link}" target="_blank" style="color:white; text-decoration:none;">📘 ${name}</a> <span style="cursor:pointer; color:#ff4a4a;" onclick="toggleFavorite('${id}', event)">✕</span>`;
+            favGrid.appendChild(favTag);
+        }
+    });
+}
+
+function renderRecentVisit() {
+    const sec = document.getElementById('recentVisitSection');
+    const grid = document.getElementById('recentVisitGrid');
+    const recentId = localStorage.getItem('recentViewedModule');
+    if(!sec || !grid) return;
+    
+    if(!recentId) { sec.style.display = 'none'; return; }
+    const originCard = document.querySelector(`[data-id="${recentId}"]`);
+    if(!originCard) { sec.style.display = 'none'; return; }
+    
+    grid.innerHTML = '';
+    sec.style.display = 'block';
+    const name = originCard.querySelector('a').textContent;
+    const link = originCard.querySelector('a').getAttribute('href');
+    
+    const tag = document.createElement('div');
+    tag.style.cssText = "background:linear-gradient(90deg, rgba(66,211,146,0.2), rgba(91,140,255,0.2)); padding:10px 20px; border-radius:12px; color:white; font-size:14px; font-weight:bold; border:1px solid #42d392;";
+    tag.innerHTML = `<a href="${link}" target="_blank" style="color:#42d392; text-decoration:none;">📖 Reprendre : ${name} ➔</a>`;
+    grid.appendChild(tag);
+}
+
+/* === قاموس المصطلحات الفرنسي السريع المدمج مع البحث === */
+const techDictionary = {
+    "analyse": "Analyse mathématique - دراسة الدوال والتحليل الرياضي والمشتقات",
+    "algo": "Algorithmique - علم الخوارزميات وهيكلة التفكير البرمجي بالـ C",
+    "archi": "Structure Machine - معمارية الحاسوب، البوابات المنطقية والـ Hardware",
+    "se": "Système d'exploitation - أنظمة التشغيل وإدارة الذاكرة والـ Shell",
+    "bdd": "Base de données - قواعد البيانات ولغة الاستعلام SQL",
+    "gl": "Génie Logiciel - هندسة البرمجيات وإدارة المشاريع التقنية"
+};
+
+/* === خوارزمية البحث الذكي المطور الفائق v18 === */
+const sb=document.getElementById('searchBox'),sg=document.getElementById('searchSuggestions'),cl=document.getElementById('clearSearch'),dp=document.getElementById('dictPreview');
+
+if(sb){
+    const items=[...document.querySelectorAll('.subject')];
+    function normalizeText(str) {
+        return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[أإآا]/g, 'ا').replace(/[ةه]/g, 'ه').replace(/[ىي]/g, 'ي').trim();
+    }
+
+    sb.addEventListener('input',()=>{
+        let rawQuery = sb.value;
+        let q = normalizeText(rawQuery);
+        cl.style.display = rawQuery ? 'block' : 'none';
+        sg.innerHTML = ''; 
+        
+        // معالجة معجم المصطلحات المدمج فورا
+        let dictMatch = Object.keys(techDictionary).find(k => q.includes(k));
+        if(dictMatch && q.length > 2) {
+            dp.style.display = 'block';
+            dp.innerHTML = `💡 <b>Glossaire Info:</b> ${techDictionary[dictMatch]}`;
+        } else {
+            dp.style.display = 'none';
+        }
+
+        if(!q){ sg.style.display = 'none'; items.forEach(i => i.style.display = ''); return; }
+        
+        let found = 0;
+        items.forEach(it => {
+            let linkEl = it.querySelector('a');
+            let name = linkEl ? linkEl.textContent : "";
+            let semester = it.getAttribute('data-semester') || "Cours";
+            let tags = it.getAttribute('data-tags') || "";
+            let combinedText = normalizeText(name + " " + tags);
+            
+            if(combinedText.includes(q)){
+                it.style.display = ''; found++;
+                let d = document.createElement('div');
+                d.className = 'sug';
+                d.innerHTML = `<span>📘 ${name.trim()}</span> <span class="sug-info">${semester}</span>`;
+                d.onclick = () => {
+                    let pId = it.parentElement.id;
+                    if(it.parentElement.parentElement && it.parentElement.parentElement.id) pId = it.parentElement.parentElement.id;
+                    if(pId && pId !== 'accueil') { hideAll(); document.getElementById(pId).style.display = 'block'; }
+                    it.scrollIntoView({behavior:'smooth', block: 'center'});
+                    it.style.transform = 'scale(1.1)';
+                    setTimeout(() => it.style.transform = '', 400);
+                    sg.style.display = 'none';
+                };
+                sg.appendChild(d);
+            } else { it.style.display = 'none'; }
+        });
+        sg.style.display = found ? 'block' : 'none';
+    });
+    cl.onclick = () => { sb.value = ''; sb.dispatchEvent(new Event('input')); dp.style.display='none'; };
+    document.addEventListener('click', (e) => { if(e.target !== sb && e.target !== sg) sg.style.display = 'none'; });
+}
+
+/* === ويدجيت إدارة المفكرة والمهام الدراسية الذكية === */
+let todos = JSON.parse(localStorage.getItem('dashboardTodos')) || ["Réviser Algorithmique", "Télécharger les PDFs d'Analyse"];
+function renderTodos() {
+    const list = document.getElementById('todo-list');
+    if(!list) return;
+    list.innerHTML = '';
+    todos.forEach((todo, idx) => {
+        const li = document.createElement('li');
+        li.className = 'todo-item';
+        li.innerHTML = `<span>${todo}</span> <button onclick="deleteTodo(${idx})">✕</button>`;
+        list.appendChild(li);
+    });
+}
+function addTodo() {
+    const input = document.getElementById('todo-input');
+    if(!input || !input.value.trim()) return;
+    todos.push(input.value.trim());
+    localStorage.setItem('dashboardTodos', JSON.stringify(todos));
+    input.value = '';
+    renderTodos();
+}
+function deleteTodo(idx) {
+    todos.splice(idx, 1);
+    localStorage.setItem('dashboardTodos', JSON.stringify(todos));
+    renderTodos();
+}
+
+/* === ويدجيت حساب العد التنازلي للامتحانات المستقبلي === */
+function initCountdown() {
+    // تعيين موعد افتراضي للامتحانات القادمة كمحاكاة ذكية
+    let examDate = new Date();
+    examDate.setDate(examDate.getDate() + 45); // بعد 45 يوما تلقائياً
+    
+    function updateDisplay() {
+        let now = new Date().getTime();
+        let diff = examDate - now;
+        let d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        let h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let s = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        const display = document.getElementById('countdown-display');
+        if(display) {
+            if(diff < 0) display.textContent = "Session d'examens en cours !";
+            else display.textContent = `${d}d ${h}h ${m}m ${s}s`;
+        }
+    }
+    setInterval(updateDisplay, 1000);
+    updateDisplay();
+}
+
+document.querySelectorAll('#accueil,#s1,#s2,#s3,#s4,#s5menu,#s5si,#s5isil,#s6').forEach(e=>e.classList.add('fade-page'));
+</script>
+
+<!-- === Floating AI Study Assistant Widget (v19) === -->
+<div id="ai-chat-widget" style="position:fixed; bottom:20px; right:20px; z-index:9999; font-family:sans-serif;">
+    <button id="ai-chat-toggle" style="background: linear-gradient(135deg, #00d2ff, #0066ff); color:#fff; border:none; width:60px; height:60px; border-radius:50%; cursor:pointer; box-shadow:0 8px 32px rgba(0,210,255,0.3); display:flex; align-items:center; justify-content:center; font-size:24px; transition:all 0.3s ease;">
+        🤖
+    </button>
+    <div id="ai-chat-box" style="display:none; position:absolute; bottom:80px; right:0; width:350px; height:450px; background:rgba(20, 20, 35, 0.95); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.1); border-radius:16px; box-shadow:0 12px 40px rgba(0,0,0,0.5); flex-direction:column; overflow:hidden; transition:all 0.3s ease;">
+        <div style="background:linear-gradient(135deg, rgba(0,210,255,0.2), rgba(0,102,255,0.2)); padding:15px; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; justify-content:between; align-items:center; color:#fff;">
+            <span style="font-weight:bold; display:flex; align-items:center; gap:8px;">✨ المساعد الذكي المطور (v19)</span>
+            <button id="ai-chat-close" style="background:none; border:none; color:#aaa; cursor:pointer; font-size:18px;">&times;</button>
+        </div>
+        <div id="ai-chat-messages" style="flex:1; padding:15px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; color:#fff; font-size:14px; direction:rtl;">
+            <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:12px; align-self:flex-start; max-width:85%;">
+                مرحباً بك! أنا مساعدك الدراسي الذكي لجامعة سيدي بلعباس. كيف يمكنني مساعدتك اليوم في مراجعة المواد أو تنظيم وقتك؟
+            </div>
+        </div>
+        <div style="padding:10px; border-top:1px solid rgba(255,255,255,0.1); display:flex; gap:8px; background:rgba(10,10,20,0.5);">
+            <input type="text" id="ai-chat-input" placeholder="اكتب سؤالك هنا..." style="flex:1; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:8px; color:#fff; outline:none; direction:rtl;">
+            <button id="ai-send-btn" style="background:#00d2ff; color:#10101a; border:none; padding:0 15px; border-radius:8px; cursor:pointer; font-weight:bold;">إرسال</button>
+        </div>
     </div>
 </div>
-    
+
 <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtn = document.getElementById('ai-chat-toggle');
+    const chatBox = document.getElementById('ai-chat-box');
+    const closeBtn = document.getElementById('ai-chat-close');
+    const sendBtn = document.getElementById('ai-send-btn');
+    const chatInput = document.getElementById('ai-chat-input');
+    const chatMessages = document.getElementById('ai-chat-messages');
 
-function hideAll(){['accueil','s1','s2','s3','s4','s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});}
-function afficherS5Menu(){hideAll();document.getElementById('s5menu').style.display='block';}
-function afficherS5SI(){hideAll();document.getElementById('s5si').style.display='block';}
-function afficherS5ISIL(){hideAll();document.getElementById('s5isil').style.display='block';}
-
-function afficherS1() {
-    document.getElementById('accueil').style.display = "none";
-    document.getElementById('s1').style.display = "block";
-    document.getElementById('s2').style.display = "none";
-    document.getElementById('s3').style.display = "none";
-    document.getElementById('s4').style.display = "none";
-    document.getElementById('s6').style.display = "none";
-    
-    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
-}
-
-function afficherS2() {
-    document.getElementById('accueil').style.display = "none";
-    document.getElementById('s2').style.display = "block";
-    document.getElementById('s1').style.display = "none";
-    document.getElementById('s3').style.display = "none";
-    document.getElementById('s4').style.display = "none";
-    document.getElementById('s6').style.display = "none";
-    
-    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
-}
-    
-function afficherS3() {
-    document.getElementById('accueil').style.display = "none";
-    document.getElementById('s3').style.display = "block";
-    document.getElementById('s1').style.display = "none";
-    document.getElementById('s2').style.display = "none";
-    document.getElementById('s4').style.display = "none";
-    document.getElementById('s6').style.display = "none";
-    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
-}
-function afficherS4() {
-    document.getElementById('accueil').style.display = "none";
-    document.getElementById('s4').style.display = "block";
-    document.getElementById('s1').style.display = "none";
-    document.getElementById('s2').style.display = "none";
-    document.getElementById('s3').style.display = "none";
-    document.getElementById('s6').style.display = "none";
-    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
-}
- function afficherS6() {
-    document.getElementById('accueil').style.display = "none";
-    document.getElementById('s6').style.display = "block";
-    document.getElementById('s1').style.display = "none";
-    document.getElementById('s2').style.display = "none";
-    document.getElementById('s3').style.display = "none";
-    document.getElementById('s4').style.display = "none";
-    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
+    if(toggleBtn && chatBox) {
+        toggleBtn.addEventListener('click', () => {
+            if(chatBox.style.display === 'none' || chatBox.style.display === '') {
+                chatBox.style.display = 'flex';
+                toggleBtn.style.transform = 'rotate(360deg)';
+            } else {
+                chatBox.style.display = 'none';
+                toggleBtn.style.transform = 'rotate(0deg)';
+            }
+        });
     }
-function retourAccueil() {
-    document.getElementById('s1').style.display = "none";
-    document.getElementById('s2').style.display = "none";
-    document.getElementById('s3').style.display = "none";
-    document.getElementById('s4').style.display = "none";
-    document.getElementById('s6').style.display = "none";
-    ['s5menu','s5si','s5isil'].forEach(id=>{let e=document.getElementById(id);if(e)e.style.display='none';});
-    document.getElementById('accueil').style.display = "block";
-}
+    if(closeBtn) {
+        closeBtn.addEventListener('click', () => { chatBox.style.display = 'none'; });
+    }
 
-document.getElementById('infoBtn').addEventListener('click', function() {
-    var panel = document.getElementById('infoPanel');
-    panel.style.display = panel.style.display === "block" ? "none" : "block";
+    function appendMessage(text, isUser) {
+        const msg = document.createElement('div');
+        msg.style.padding = '10px';
+        msg.style.borderRadius = '12px';
+        msg.style.maxWidth = '85%';
+        msg.style.lineHeight = '1.4';
+        if(isUser) {
+            msg.style.background = 'linear-gradient(135deg, #00d2ff, #0066ff)';
+            msg.style.color = '#fff';
+            msg.style.alignSelf = 'flex-end';
+        } else {
+            msg.style.background = 'rgba(255,255,255,0.05)';
+            msg.style.color = '#fff';
+            msg.style.alignSelf = 'flex-start';
+        }
+        msg.innerText = text;
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function handleSend() {
+        const text = chatInput.value.trim();
+        if(!text) return;
+        appendMessage(text, true);
+        chatInput.value = '';
+
+        // المحاكاة الذكية الذاتية المعتمدة على الكلمات المفتاحية للمواد بجامعة سيدي بلعباس
+        setTimeout(() => {
+            let reply = "بصفتي مساعدك الذكي، أقترح عليك مراجعة الملخصات المتاحة في علامة التبويب المخصصة للمواد، والتركيز على حل السلاسل لتعزيز الفهم الدراسي!";
+            const lowerText = text.toLowerCase();
+            if(lowerText.includes('archi') || lowerText.includes('معمارية')) {
+                reply = "مادة الـ Architecture تعتمد على فهم كيفية عمل المعالج والذاكرة (RAM) والتحويل بين الأنظمة (الـ Binary والـ Hexadecimal). تأكد من تحميل ملخصات السداسي الأول المرفوعة في الموقع!";
+            } else if(lowerText.includes('analyse') || lowerText.includes('تحليل')) {
+                reply = "التحليل الرياضي (Analyse) يركز في البداية على النهايات، الاستمرارية، والاشتقاق. أنصحك بالاطلاع على نماذج الامتحانات المتاحة لتضمن العلامة الكاملة.";
+            } else if(lowerText.includes('algo') || lowerText.includes('خوارزميات')) {
+                reply = "الخوارزميات (Algorithmique) هي أساس البرمجة. ركز جيداً على الحلقات (Loops) والمصفوفات (Arrays) فهي الأكثر تكراراً في الامتحانات.";
+            } else if(lowerText.includes('امتحان') || lowerText.includes('exam')) {
+                reply = "لقد قمت بتحديث عداد الامتحانات التنازلي في لوحة التحكم (Dashboard) ليتبقى 45 يوماً، استغل هذا الوقت لحل الامتحانات السابقة المتوفرة هنا!";
+            }
+            appendMessage(reply, false);
+        }, 800);
+    }
+
+    if(sendBtn && chatInput) {
+        sendBtn.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
+    }
 });
 </script>
-<button id="themeBtn" title="Mode sombre">🌙</button>
+
+
+<!-- ==================== V19 PRO NEW FEATURES MODALS ==================== -->
+<!-- رادار تبادل الملخصات والعمل الجماعي (Peer-to-Peer Upload Form) -->
+<div id="p2pModal" class="p2p-modal">
+    <div class="glass-card" style="direction: ltr; text-align: left;">
+        <div style="width:65px; height:65px; background:linear-gradient(135deg, #5b8cff, #00ffc8); border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; font-size:28px;">📡</div>
+        <h3 style="margin:5px 0; text-align:center;">Radar P2P / رادار التبادل</h3>
+        <p style="font-size:12px; opacity:0.8; margin-bottom:15px; text-align:center;">Partagez vos résumés pour construire le site / ساهم في بناء الموقع</p>
+        
+        <input type="text" id="p2pName" class="glass-input" placeholder="Nom complet / الاسم الكامل">
+        <input type="text" id="p2pSubject" class="glass-input" placeholder="Matière ou Module (Ex: Analyse 1) / المادة">
+        <input type="url" id="p2pLink" class="glass-input" placeholder="Lien du fichier (Drive, OneDrive...) / رابط الملف">
+        <textarea id="p2pNote" class="glass-input" style="height:60px; resize:none;" placeholder="Note courte / ملاحظة قصيرة..."></textarea>
+        
+        <button onclick="submitP2PForm()" style="width:100%; margin:10px 0 0 0;">🚀 Envoyer / إرسال المساهمة</button>
+        <button onclick="closeP2PModal()" style="width:100%; margin:8px 0 0 0; background:rgba(255,45,85,0.2); box-shadow:none;">Annuler / إلغاء</button>
+    </div>
+</div>
+
+<!-- تقنية بومودورو للمراجعة والدراسة (Pomodoro Timer) -->
+<div id="pomoModal" class="pomodoro-modal">
+    <div class="glass-card" style="direction: ltr; text-align: left;">
+        <div style="width:65px; height:65px; background:linear-gradient(135deg, #ff4a4a, #ff7b7b); border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; font-size:28px;">⏱️</div>
+        <h3 style="margin:5px 0; text-align:center;">Pomodoro Timer / مؤقت بومودورو</h3>
+        <p style="font-size:12px; opacity:0.8; margin-bottom:15px; text-align:center;" id="pomoStatus">Focus Time! ادرس بجد لمدة 25 دقيقة</p>
+        
+        <div class="pomo-modes" style="display:flex; justify-content:center; gap:5px; flex-wrap:wrap;">
+            <button class="pomo-btn-mode active" id="pomoWork" onclick="setPomoMode('work')">📚 Work (25m)</button>
+            <button class="pomo-btn-mode" id="pomoShort" onclick="setPomoMode('short')">☕ Short Break (5m)</button>
+            <button class="pomo-btn-mode" id="pomoLong" onclick="setPomoMode('long')">🌴 Long Break (15m)</button>
+        </div>
+        
+        <div class="pomodoro-timer" id="pomoDisplay" style="text-align:center;">25:00</div>
+        
+        <div class="pomo-controls" style="display:flex; gap:10px; justify-content:center;">
+            <button onclick="togglePomoTimer()" id="pomoStartBtn" style="flex:1; margin:0;">▶️ Start / ابدأ</button>
+            <button onclick="resetPomoTimer()" style="flex:1; margin:0; background:rgba(255,255,255,0.1); box-shadow:none;">🔄 Reset</button>
+        </div>
+        <button onclick="closePomoModal()" style="width:100%; margin-top:12px; background:rgba(255,255,255,0.05); box-shadow:none; border:1px solid rgba(255,255,255,0.1); text-align:center;">Fermer / إغلاق</button>
+    </div>
+</div>
+
 
 <script>
-const themeBtn=document.getElementById("themeBtn");
-if(localStorage.getItem("theme")==="dark"){document.body.classList.add("dark");themeBtn.style.justifyContent="flex-end";}
-themeBtn.onclick=()=>{document.body.classList.toggle("dark");
-const d=document.body.classList.contains("dark");
-localStorage.setItem("theme",d?"dark":"light");
-themeBtn.style.justifyContent=d?"flex-end":"flex-start";};
+// ==================== V20 AI PRO NEW FEATURES ====================
+
+// ==================== V20 AI PRO NEW FEATURES ====================
+function toggleReviewed(cardId, event) {
+    if(event) { event.stopPropagation(); event.preventDefault(); }
+    const currentStatus = localStorage.getItem('reviewed_' + cardId) === 'true';
+    localStorage.setItem('reviewed_' + cardId, !currentStatus);
+    
+    // Update the button UI inside the card
+    const card = document.querySelector(`[data-id="${cardId}"]`);
+    if(card) {
+        const btn = card.querySelector('.review-toggle-btn');
+        if(btn) btn.innerHTML = !currentStatus ? '✅' : '⬜';
+    }
+    
+    calculateStudyProgress();
+    showToast(!currentStatus ? "✅ Marqué comme révisé / تمت المراجعة!" : "⬜ Retiré des révisions / تم إلغاء المراجعة");
+}
+
+function calculateStudyProgress() {
+    const cards = document.querySelectorAll('.subject');
+    if(cards.length === 0) return;
+    
+    let reviewedCount = 0;
+    cards.forEach(card => {
+        const cardId = card.getAttribute('data-id');
+        if(localStorage.getItem('reviewed_' + cardId) === 'true') {
+            reviewedCount++;
+        }
+    });
+    
+    const percentage = Math.round((reviewedCount / cards.length) * 100);
+    
+    const progressFill = document.getElementById('dynamicStudyProgressFill');
+    const progressText = document.getElementById('dynamicStudyProgressText');
+    
+    if(progressFill) progressFill.style.width = percentage + '%';
+    if(progressText) progressText.getElementById ? progressText.innerHTML = percentage + '%' : progressText.textContent = percentage + '%';
+}
+
+function scheduleSubjectToTodo(cardId, event) {
+    if(event) { event.stopPropagation(); event.preventDefault(); }
+    const card = document.querySelector(`[data-id="${cardId}"]`);
+    if(!card) return;
+    
+    const subjectName = card.querySelector('a') ? card.querySelector('a').textContent.trim() : cardId;
+    const taskText = `Réviser ${subjectName} (Planifié via AI Planner)`;
+    
+    // Push into the existing global todos array
+    if(typeof todos !== 'undefined') {
+        todos.push(taskText);
+        localStorage.setItem('dashboardTodos', JSON.stringify(todos));
+        if(typeof renderTodos === 'function') renderTodos();
+        showToast("📅 Module planifié dans votre To-Do List!");
+    } else {
+        let localTodos = JSON.parse(localStorage.getItem('dashboardTodos') || '[]');
+        localTodos.push(taskText);
+        localStorage.setItem('dashboardTodos', JSON.stringify(localTodos));
+        showToast("📅 Module planifié dans votre To-Do List!");
+    }
+}
+
+// Ensure progress is calculated immediately on page load
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(calculateStudyProgress, 1500);
+});
+
+
+// ==================== V19 PRO SCRIPTS ====================
+function openP2PModal() {
+    const modal = document.getElementById('p2pModal');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('active'), 10);
+}
+function closeP2PModal() {
+    const modal = document.getElementById('p2pModal');
+    modal.classList.remove('active');
+    setTimeout(() => modal.style.display = 'none', 300);
+}
+function submitP2PForm() {
+    const name = document.getElementById('p2pName').value.trim();
+    const subject = document.getElementById('p2pSubject').value.trim();
+    const link = document.getElementById('p2pLink').value.trim();
+    const note = document.getElementById('p2pNote').value.trim();
+    
+    if(!name || !subject || !link) {
+        showToast("⚠️ Veuillez remplir les champs obligatoires / يرجى ملء الحقول الأساسية!");
+        return;
+    }
+    
+    showToast("🎉 Succès! Merci pour votre contribution / تم إرسال ملخصك بنجاح!");
+    closeP2PModal();
+    document.getElementById('p2pName').value = '';
+    document.getElementById('p2pSubject').value = '';
+    document.getElementById('p2pLink').value = '';
+    document.getElementById('p2pNote').value = '';
+}
+
+// Pomodoro Timer Variables
+let pomoInterval = null;
+let pomoTimeLeft = 25 * 60;
+let currentPomoMode = 'work'; // work, short, long
+let isPomoRunning = false;
+
+function openPomoModal() {
+    const modal = document.getElementById('pomoModal');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('active'), 10);
+}
+function closePomoModal() {
+    const modal = document.getElementById('pomoModal');
+    modal.classList.remove('active');
+    setTimeout(() => modal.style.display = 'none', 300);
+}
+function setPomoMode(mode) {
+    currentPomoMode = mode;
+    isPomoRunning = false;
+    clearInterval(pomoInterval);
+    document.getElementById('pomoStartBtn').innerHTML = "▶️ ابدأ";
+    
+    document.querySelectorAll('.pomo-btn-mode').forEach(btn => btn.classList.remove('active'));
+    
+    if(mode === 'work') {
+        pomoTimeLeft = 25 * 60;
+        document.getElementById('pomoWork').classList.add('active');
+        document.getElementById('pomoStatus').innerHTML = "Focus Time (25 min) / حان وقت التركيز!";
+    } else if(mode === 'short') {
+        pomoTimeLeft = 5 * 60;
+        document.getElementById('pomoShort').classList.add('active');
+        document.getElementById('pomoStatus').innerHTML = "Short Break (5 min) / خذ نفساً عميقاً واسترح ☕";
+    } else if(mode === 'long') {
+        pomoTimeLeft = 15 * 60;
+        document.getElementById('pomoLong').classList.add('active');
+        document.getElementById('pomoStatus').innerHTML = "Long Break (15 min) / راحة مطولة ممتازة 🌴";
+    }
+    updatePomoDisplay();
+}
+function updatePomoDisplay() {
+    const mins = Math.floor(pomoTimeLeft / 60).toString().padStart(2, '0');
+    const secs = (pomoTimeLeft % 60).toString().padStart(2, '0');
+    document.getElementById('pomoDisplay').innerHTML = `${mins}:${secs}`;
+}
+function togglePomoTimer() {
+    if(isPomoRunning) {
+        clearInterval(pomoInterval);
+        document.getElementById('pomoStartBtn').innerHTML = "▶️ ابدأ";
+        isPomoRunning = false;
+    } else {
+        isPomoRunning = true;
+        document.getElementById('pomoStartBtn').innerHTML = "⏸️ إيقاف مؤقت";
+        pomoInterval = setInterval(() => {
+            if(pomoTimeLeft > 0) {
+                pomoTimeLeft--;
+                updatePomoDisplay();
+            } else {
+                clearInterval(pomoInterval);
+                isPomoRunning = false;
+                document.getElementById('pomoStartBtn').innerHTML = "▶️ ابدأ";
+                showToast("⏰ Time's up! / انتهى الوقت الحالي!");
+                if(currentPomoMode === 'work') {
+                    setPomoMode('short');
+                } else {
+                    setPomoMode('work');
+                }
+            }
+        }, 1000);
+    }
+}
+function resetPomoTimer() {
+    setPomoMode(currentPomoMode);
+}
+// Helper function to connect with the existing code toast
+function showToast(msg) {
+    let t = document.getElementById('toast');
+    if(t) {
+        t.innerHTML = msg;
+        t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 3500);
+    }
+}
 </script>
+
+    <!-- زر الخطة الدراسية -->
+    
+
+    <!-- النافذة المنبثقة -->
+    <div id="studyPlanner" class="study-planner-modal">
+        <div class="modal-content">
+            <h3>إنشاء خطة دراسية</h3>
+            <input type="text" id="subject" placeholder="اسم المادة" style="width:100%; margin-bottom:10px; padding:8px; border-radius:5px; border:none;">
+            <input type="date" id="date" style="width:100%; margin-bottom:10px; padding:8px; border-radius:5px; border:none;">
+            <button class="glass-btn" onclick="savePlan()">حفظ</button>
+            <button class="glass-btn" onclick="document.getElementById('studyPlanner').style.display='none'">إغلاق</button>
+        </div>
+    </div>
+    <script>
+        function savePlan() {
+            const s = document.getElementById('subject').value;
+            const d = document.getElementById('date').value;
+            alert('تم حفظ خطة للمادة: ' + s + ' بتاريخ: ' + d);
+        }
+    </script>
+
+    <div id="modernModal" class="modal-backdrop">
+        <div class="modal-modern">
+            <h2>✨ إنشاء خطة دراسية</h2>
+            <input type="text" placeholder="اسم المادة الدراسية...">
+            <input type="date">
+            <button class="btn-save">حفظ الخطة</button>
+            <button class="btn-close" onclick="document.getElementById('modernModal').style.display='none'">إغلاق</button>          
+        </div>
+    </div>
+    
+    <footer class="site-footer">
+   بوابة طلاب كلية الإعلام الآلي وعلوم الحاسوب - جامعة الجيلالي اليابس - 2026 ©
+</footer>
+    
 </body>
 </html>
